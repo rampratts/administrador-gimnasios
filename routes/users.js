@@ -9,23 +9,36 @@ const pool = require('../db/db');
 const auth = require('../middleware/authentication');
 
 router.post('/register',
-    check('email').exists(),
-    check('password').exists(),
-    body('email').isEmail(),
-    body('password').isLength({ min: 5 }),
+    check('email').isEmail(),
+    body('contrasena').isLength({ min: 6 }),
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
 
-        const { username, email, password } = req.body;
+        const { nombre, apellido, email, contrasena, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id } = req.body;
+        
         try {
             const salt = await bcrypt.genSalt(10);
-            const hashedPassword = await bcrypt.hash(password, salt);
+            const hashedPassword = await bcrypt.hash(contrasena, salt);
+            const userId = uuidv4();
             
-            const response = await pool.query('INSERT INTO users VALUES($1, $2, $3, $4)', [uuidv4(), username, email, hashedPassword]);
-            res.send({results: "User created"});
+            await pool.query("INSERT INTO usuario VALUES($1, $2, $3, $4, $5, TO_DATE($6, 'DD/MM/YYYY'), $7, $8, TO_DATE($9, 'DD/MM/YYYY'), $10, $11)", [userId, nombre, apellido, email, hashedPassword, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id]);            
+            
+            if(tipo_usuario === 'admin') {
+                await pool.query('INSERT INTO administrativo VALUES($1, $2, $3)', [uuidv4(), req.body.area, userId]);
+            } else if(tipo_usuario === 'prof') {
+                await pool.query('INSERT INTO profesor VALUES($1, $2, $3, $4)', [uuidv4(), req.body.area, req.body.calificado, userId]);
+            } else if( tipo_usuario === 'cliente') {
+                await pool.query('INSERT INTO cliente VALUES($1, $2, $3, $4, $5, $6)', [uuidv4(), req.body.pago_mensual, req.body.deuda, req.body.peso_actual, req.body.imc, userId]);
+            }
+
+            res.send({
+                status: "OK",
+                statusCode: 200,
+                results: "User created"
+            });
         } catch (error) {
             res.send(error);
         }
