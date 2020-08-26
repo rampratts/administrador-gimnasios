@@ -17,14 +17,14 @@ router.post('/register',
             return res.status(422).json({ errors: errors.array() });
         }
 
-        const { nombre, apellido, email, contrasena, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id } = req.body;
+        const { nombre, nombre_usuario, apellido, email, contrasena, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id } = req.body;
         
         try {
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(contrasena, salt);
             const userId = uuidv4();
             
-            await pool.query("INSERT INTO usuario VALUES($1, $2, $3, $4, $5, TO_DATE($6, 'DD/MM/YYYY'), $7, $8, TO_DATE($9, 'DD/MM/YYYY'), $10, $11)", [userId, nombre, apellido, email, hashedPassword, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id]);            
+            await pool.query("INSERT INTO usuario VALUES($1, $2, $3, $4, $5, $6, TO_DATE($7, 'DD/MM/YYYY'), $8, $9, TO_DATE($10, 'DD/MM/YYYY'), $11, $12)", [userId, nombre_usuario, nombre, apellido, email, hashedPassword, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario, gimnasio_id]);            
             
             if(tipo_usuario === 'admin') {
                 await pool.query('INSERT INTO administrativo VALUES($1, $2, $3)', [uuidv4(), req.body.area, userId]);
