@@ -8,6 +8,7 @@ CREATE TABLE gimnasio (
 
 CREATE TABLE usuario (
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	nombre_usuario varchar NOT NULL UNIQUE,
   	nombre varchar NOT NULL,
   	apellido varchar NOT NULL,
     email varchar NOT NULL,
