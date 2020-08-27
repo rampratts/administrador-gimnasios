@@ -9,6 +9,7 @@ const pool = require('../db/db');
 const auth = require('../middleware/authentication');
 
 router.post('/register',
+    check('nombre_usuario').isEmail(),
     check('email').isEmail(),
     body('contrasena').isLength({ min: 6 }),
     async (req, res) => {
