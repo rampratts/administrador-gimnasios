@@ -6,7 +6,7 @@ const { check, body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 const pool = require('../db/db');
-const auth = require('../middleware/authentication');
+const Auth = require('../middleware/authentication');
 
 router.post('/register',
     check('nombre_usuario').isEmail(),
@@ -47,18 +47,18 @@ router.post('/register',
 
 
 router.post('/login',
-    check('email').exists(),
-    check('password').exists(), 
+    check('nombre_usuario').exists(),
+    check('contrasena').exists(), 
     async (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
 
-        const { email, password } = req.body;
+        const { nombre_usuario, contrasena } = req.body;
         try {
-            const user = await pool.query('SELECT id, username, email, password FROM users WHERE email = $1', [email]);
-            const validPassword = await bcrypt.compare(password, user.rows[0].password);
+            const user = await pool.query('SELECT id, nombre_usuario, tipo_usuario, contrasena FROM usuario WHERE nombre_usuario = $1', [nombre_usuario]);
+            const validPassword = await bcrypt.compare(contrasena, user.rows[0].contrasena);
     
             if(!validPassword) {
                 return res.status(400).send({'error': 'Invalid credentials'});
@@ -66,8 +66,8 @@ router.post('/login',
             
             const jwtPayload = {
                 id: user.rows[0].id,
-                username: user.rows[0].username,
-                email: user.rows[0].email,
+                nombre_usuario: user.rows[0].nombre_usuario,
+                tipo_usuario: user.rows[0].tipo_usuario,
             }
 
             const token = await jwt.sign(jwtPayload, process.env.JWT_SECRET);
@@ -79,7 +79,7 @@ router.post('/login',
 
 });
 
-router.delete('/', auth, async (req, res) => {
+router.delete('/', Auth.isAuth, async (req, res) => {
     try {
         const response = await pool.query('DELETE FROM users WHERE id = $1', [req.user.id]);
         res.send({'result': 'User deleted'});
@@ -88,11 +88,12 @@ router.delete('/', auth, async (req, res) => {
     }
 });
 
-router.post('/verifyToken', auth, (req, res) => { 
+router.post('/verifyToken', Auth.isAuth, (req, res) => { 
     try {
         res.json({
             auth: true,
-            username: req.user.username
+            nombre_usuario: req.user.nombre_usuario,
+            tipo_usuario: req.user.tipo_usuario
         })
     } catch(error) {
         console.error(err.message);
