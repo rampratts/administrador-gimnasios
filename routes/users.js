@@ -81,8 +81,24 @@ router.post('/login',
 
 router.delete('/', Auth.isAuth, async (req, res) => {
     try {
-        const response = await pool.query('DELETE FROM users WHERE id = $1', [req.user.id]);
-        res.send({'result': 'User deleted'});
+        const { userId, tipo_usuario } = req.body;
+        switch(tipo_usuario) {
+            case 'admin':
+                await pool.query('DELETE FROM administrativo WHERE usuario_id = $1', [userId]);
+                break
+            case 'prof':
+                await pool.query('DELETE FROM profesor WHERE usuario_id = $1', [userId]);
+                break
+            case 'cliente':
+                await pool.query('DELETE FROM cliente WHERE usuario_id = $1', [userId]);
+                break
+        }
+        await pool.query('DELETE FROM usuario WHERE id = $1', [userId]);
+        res.status(200).send({
+            status: "OK",
+            statusCode: 200,
+            results: "User deleted"
+        });
     } catch (error) {
         res.status(400).send(error)
     }
