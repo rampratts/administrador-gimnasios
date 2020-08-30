@@ -15,7 +15,7 @@ const UserProfileLite = () => (
         <UserDetails />
       </Col>
       <Col lg="8">
-        <UserAccountDetails />
+        {/* <UserAccountDetails /> */}
       </Col>
     </Row>
   </Container>
