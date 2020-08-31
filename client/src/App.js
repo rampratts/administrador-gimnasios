@@ -1,47 +1,31 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { ProtectedRoute } from './components/ProtectedRoute';
-import { UserContext } from './components/UserContext';
-import { verifyAuthentication } from './utils';
-import Homepage from './components/Homepage';
-import Login from './components/Login';
-import Register from './components/Register';
-import Secret from './components/Secret';
-import Nav from './components/Nav';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLogged, setIsLogged] = useContext(UserContext);
+import routes from "./routes";
+import withTracker from "./withTracker";
 
-  const loadApp = () => {
-    verifyAuthentication().then(userInfo => {
-      setIsLogged(userInfo.auth)
-      setIsLoaded(true);
-    })
-  }
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 
-  useEffect(() => {
-    loadApp();
-  }, [])
-
-  if(!isLoaded) {
-    return (<React.Fragment>Loading</React.Fragment>)
-  } else {
-    return (
-      <Router>
-        <div className="App">
-          <Nav />
-          <Switch>
-            <Route exact path='/' component={Homepage}/>
-            <Route exact path='/login' component={Login}/>
-            <Route exact path='/register' component={Register}/>
-            <ProtectedRoute exact path='/secret' component={Secret}/>
-          </Switch>
-        </div>
-      </Router>
-    )
-  }
-
-}
-
-export default App;
+export default () => (
+  <Router basename={process.env.REACT_APP_BASENAME || ""}>
+    <div>
+      {routes.map((route, index) => {
+        return (
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={withTracker(props => {
+              return (
+                <route.layout {...props}>
+                  <route.component {...props} />
+                </route.layout>
+              );
+            })}
+          />
+        );
+      })}
+    </div>
+  </Router>
+);
