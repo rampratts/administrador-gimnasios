@@ -16,7 +16,7 @@ import request from '../../api/axios.instance';
 
 
 const Login = ({history}) => {
-    const [isLogged, setIsLogged] = useContext(UserContext);
+    const [userInfo, setUserInfo] = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,9 +24,8 @@ const Login = ({history}) => {
         const res = await UserRequests.login(username, password);
         if(res.data.token) {
             localStorage.setItem('auth_token', res.data.token);
-            request.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
-            setIsLogged(true);
-            history.push('/')
+            setUserInfo({...userInfo, isLogged: true});
+            history.push('/');
         } else {
             console.log('not login')
         }

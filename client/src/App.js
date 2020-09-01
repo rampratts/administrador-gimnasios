@@ -13,16 +13,16 @@ import UserRequests from "./api/UserRequests";
 
 export default () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isLogged, setIsLogged] = useContext(UserContext);
+  const [userInfo, setUserInfo] = useContext(UserContext);
   
   const loadApp = async () => {
     try {
       const res = await UserRequests.verifyToken();
       if(res.data.auth) {
-        setIsLogged(true);
+        setUserInfo({...userInfo, isLogged: true});
       }
     } catch (error) {
-      setIsLogged(false);
+      setUserInfo({...userInfo, isLogged: false});
     } finally {
       setIsLoaded(true);
     }
@@ -34,17 +34,52 @@ export default () => {
 
   if(!isLoaded) {
     return (<h1>Cargando</h1>); 
-  }else if(!isLogged) {
+  }else if(!userInfo.isLogged) {
     return (
-      <Router>
-        <Switch>
-          <Route exact path='/login' component={Login}/>
-          <Route  component={() => <Redirect to="/login"/>}/>
-        </Switch>
-      </Router>
+      <LoginApp/>
     )
   } else {
     return (
+      <FullApp/>
+    );
+  }
+}
+
+const LoginApp = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path='/login' component={Login}/>
+        <Route component={() => <Redirect to="/login"/>}/>
+      </Switch>
+    </Router>
+  )
+}
+
+const FullApp = () => {
+  const [userInfo, setUserInfo] = useContext(UserContext);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const setUserData = async () => {
+    const res = await UserRequests.verifyToken();
+    if(res.data.auth) {
+      setUserInfo({
+        ...userInfo,
+        nombre_usuario: res.data.nombre_usuario,
+        tipo_usuario: res.data.tipo_usuario
+      })
+      setIsLoaded(true);
+    }
+  }
+
+  useEffect(() => {
+    setUserData();
+  }, [])
+
+  if(!isLoaded){
+    return (<h1>Cargando</h1>)
+  } else { 
+    return(
       <Router basename={process.env.REACT_APP_BASENAME || ""}>
         <div>
           {routes.map((route, index) => {
@@ -65,6 +100,6 @@ export default () => {
           })}
         </div>
       </Router>
-    );
+    )
   }
 }

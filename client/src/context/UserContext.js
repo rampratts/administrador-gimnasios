@@ -1,13 +1,16 @@
 import React, { useState, createContext } from 'react';
 
-export const UserContext = createContext('');
+export const UserContext = createContext({});
 
 export const UserProvider = props => {
-    const [isLogged, setIsLogged] = useState(false);
-    const [username, setUsername] = useState('');
+    const [userInfo, setUserInfo] = useState({
+        isLogged: false,
+        nombre_usuario: '',
+        tipo_usuario: '',
+    });
 
     return (
-        <UserContext.Provider value={[isLogged, setIsLogged], [username, setUsername]}>
+        <UserContext.Provider value={[userInfo, setUserInfo]}>
             {props.children}
         </UserContext.Provider>
     )
