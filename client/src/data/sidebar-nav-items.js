@@ -1,6 +1,11 @@
 export default function() {
   return [
     {
+      title: "Inicio",
+      htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
+      to: "/inicio",
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/#",

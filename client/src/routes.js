@@ -12,13 +12,19 @@ import Errors from "./views/Errors";
 import ComponentsOverview from "./views/ComponentsOverview";
 import Tables from "./views/Tables";
 import BlogPosts from "./views/BlogPosts";
+import Inicio from "./views/Inicio";
 
 export default [
   {
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/user-profile-lite" />
+    component: () => <Redirect to="/inicio" />
+  },
+  {
+    path: "/inicio",
+    layout: DefaultLayout,
+    component: Inicio
   },
   {
     path: "/blog-overview",
