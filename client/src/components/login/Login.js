@@ -6,28 +6,62 @@ import {
     Container,
     Row,
     Col,
-    Button
+    Button,
+    Alert
 } from "shards-react";
 
 import { UserContext } from '../../context/UserContext';
 
 import UserRequests from '../../api/UserRequests';
-import request from '../../api/axios.instance';
 
 
 const Login = ({history}) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [usernameInputInvalid, setUsernameInputInvalid] = useState(false);
+    const [passwordInputInvalid, setPasswordInputInvalid] = useState(false);
+    const [isFormInvalid, setIsFormInvalid] = useState(false);
+    const [mensajeForm, setMensajeForm] = useState('');
+
+    const validarForm = () => { 
+        setIsFormInvalid(false)
+        setUsernameInputInvalid(false);
+        setPasswordInputInvalid(false);
+        if(!username) {
+            setIsFormInvalid(true);
+            setUsernameInputInvalid(true);
+            setMensajeForm('Por favor indique un nombre de usuario.');
+            return false;
+        }
+
+        if(!password) {
+            setIsFormInvalid(true);
+            setPasswordInputInvalid(true);
+            setMensajeForm('Por favor indique una contraseña.');
+            return false;
+        }
+
+        if(password.length < 6) {
+            setIsFormInvalid(true);
+            setPasswordInputInvalid(true);
+            setMensajeForm('La contraseña debe tener al menos 6 caracteres.');
+            return false;
+        }
+        return true;
+    }
 
     const logUser = async () => {
+        if(!validarForm()) return;
+
         const res = await UserRequests.login(username, password);
         if(res.data.token) {
             localStorage.setItem('auth_token', res.data.token);
             setUserInfo({...userInfo, isLogged: true});
             history.push('/');
         } else {
-            console.log('not login')
+            setIsFormInvalid(true);
+            setMensajeForm('Credenciales incorrectas.');
         }
     }
 
@@ -39,14 +73,20 @@ const Login = ({history}) => {
                         <h1>Iniciar Sesión</h1>
                         <FormGroup>
                             <label htmlFor="#username">Nombre de Usuario</label>
-                            <FormInput id="#username" placeholder="Nombre de Usuario" value={username} onChange={e => setUsername(e.target.value)}/>
+                            <FormInput invalid={usernameInputInvalid} id="#username" placeholder="Nombre de Usuario" value={username} onChange={e => setUsername(e.target.value)}/>
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="#password">Contraseña</label>
-                            <FormInput type="password" id="#password" placeholder="Contraseña"  value={password} onChange={e => setPassword(e.target.value)}/>
+                            <FormInput invalid={passwordInputInvalid} type="password" id="#password" placeholder="Contraseña"  value={password} onChange={e => setPassword(e.target.value)}/>
                         </FormGroup>
                     </Form>
                     <Button onClick={logUser}>Iniciar Sesión</Button>
+                    {isFormInvalid ? 
+                    <Alert theme="danger" className="mt-3" fade>
+                        {mensajeForm}
+                    </Alert>
+                    :
+                    <React.Fragment/>}
                 </Col>
             </Row>
         </Container>
