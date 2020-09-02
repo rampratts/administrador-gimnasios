@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
+import BounceLoader from "react-spinners/BounceLoader";
 
 import routes from "./routes";
 import withTracker from "./withTracker";
@@ -33,7 +34,12 @@ export default () => {
   }, [])
 
   if(!isLoaded) {
-    return (<h1>Cargando</h1>); 
+    return (
+      <div className="align-items-center h-100 justify-content-center position-absolute w-100" style={{display: 'flex', flexDirection: 'column'}}>
+        <BounceLoader color={"#007BFF"}/>
+        <h4 className='mt-3'>Cargando...</h4>
+      </div>
+    ); 
   }else if(!userInfo.isLogged) {
     return (
       <LoginApp/>
@@ -77,7 +83,11 @@ const FullApp = () => {
   }, [])
 
   if(!isLoaded){
-    return (<h1>Cargando</h1>)
+    return (
+  <div className="align-items-center h-100 justify-content-center position-absolute w-100" style={{display: 'flex', flexDirection: 'column'}}>
+    <BounceLoader color={"#007BFF"}/>
+    <h4 className='mt-3'>Cargando...</h4>
+  </div>)
   } else { 
     return(
       <Router basename={process.env.REACT_APP_BASENAME || ""}>

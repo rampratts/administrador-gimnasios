@@ -2,7 +2,7 @@ export default function() {
   return [
     {
       title: "Inicio",
-      htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
+      htmlBefore: '<i class="material-icons">home</i>',
       to: "/inicio",
     },
     {
