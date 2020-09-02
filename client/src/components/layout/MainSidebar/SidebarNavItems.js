@@ -3,13 +3,17 @@ import { Nav } from "shards-react";
 
 import SidebarNavItem from "./SidebarNavItem";
 import { Store } from "../../../flux";
+import { UserContext } from "../../../context/UserContext";
 
 class SidebarNavItems extends React.Component {
-  constructor(props) {
+  static contextType = UserContext;
+  constructor(props, context) {
     super(props)
 
+    const userInfo = context;
+
     this.state = {
-      navItems: Store.getSidebarItems()
+      navItems: Store.getSidebarItems(userInfo[0].tipo_usuario)
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,6 +28,8 @@ class SidebarNavItems extends React.Component {
   }
 
   onChange() {
+    const userInfo = this.context;
+
     this.setState({
       ...this.state,
       navItems: Store.getSidebarItems()

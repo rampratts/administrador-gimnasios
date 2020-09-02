@@ -84,15 +84,18 @@ const FullApp = () => {
 
   if(!isLoaded){
     return (
-  <div className="align-items-center h-100 justify-content-center position-absolute w-100" style={{display: 'flex', flexDirection: 'column'}}>
-    <BounceLoader color={"#007BFF"}/>
-    <h4 className='mt-3'>Cargando...</h4>
-  </div>)
+      <div className="align-items-center h-100 justify-content-center position-absolute w-100" style={{display: 'flex', flexDirection: 'column'}}>
+        <BounceLoader color={"#007BFF"}/>
+        <h4 className='mt-3'>Cargando...</h4>
+      </div>
+    )
   } else { 
+    const filteredRoutes = routes.filter(route => route.hasAccess.includes(userInfo.tipo_usuario));
+
     return(
       <Router basename={process.env.REACT_APP_BASENAME || ""}>
         <div>
-          {routes.map((route, index) => {
+          {filteredRoutes.map((route, index) => {
             return (
               <Route
                 key={index}
@@ -108,6 +111,7 @@ const FullApp = () => {
               />
             );
           })}
+          <Route component={() => <Redirect to="/"/>}/>
         </div>
       </Router>
     )

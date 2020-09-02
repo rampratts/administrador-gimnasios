@@ -2,17 +2,21 @@ import { EventEmitter } from "events";
 
 import Dispatcher from "./dispatcher";
 import Constants from "./constants";
-import getSidebarNavItems from "../data/sidebar-nav-items";
+import { getAdminSidebarNavItems, getProfSidebarNavItems, getClientSidebarNavItems } from "../data/sidebar-nav-items";
 
 let _store = {
   menuVisible: false,
-  navItems: getSidebarNavItems()
+  navItems: {
+    'admin': getAdminSidebarNavItems(),
+    'prof': getProfSidebarNavItems(),
+    'client': getClientSidebarNavItems()
+  }
 };
 
 class Store extends EventEmitter {
   constructor() {
     super();
-
+    
     this.registerToActions = this.registerToActions.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
 
@@ -37,8 +41,8 @@ class Store extends EventEmitter {
     return _store.menuVisible;
   }
 
-  getSidebarItems() {
-    return _store.navItems;
+  getSidebarItems(tipo_usuario) {
+    return _store.navItems[tipo_usuario];
   }
 
   addChangeListener(callback) {
