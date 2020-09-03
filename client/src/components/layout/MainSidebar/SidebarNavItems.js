@@ -28,8 +28,6 @@ class SidebarNavItems extends React.Component {
   }
 
   onChange() {
-    const userInfo = this.context;
-
     this.setState({
       ...this.state,
       navItems: Store.getSidebarItems()
