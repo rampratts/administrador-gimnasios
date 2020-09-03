@@ -5,54 +5,27 @@ import { Redirect } from "react-router-dom";
 import { DefaultLayout } from "./layouts";
 
 // Route Views
-import BlogOverview from "./views/BlogOverview";
 import UserProfileLite from "./views/UserProfileLite";
-import AddNewPost from "./views/AddNewPost";
-import Errors from "./views/Errors";
-import ComponentsOverview from "./views/ComponentsOverview";
-import Tables from "./views/Tables";
-import BlogPosts from "./views/BlogPosts";
+import Inicio from "./views/Inicio";
 
 export default [
   {
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    component: () => <Redirect to="/blog-overview" />
+    hasAccess: ['admin', 'prof', 'client'],
+    component: () => <Redirect to="/inicio" />
   },
   {
-    path: "/blog-overview",
+    path: "/inicio",
     layout: DefaultLayout,
-    component: BlogOverview
+    hasAccess: ['admin', 'prof', 'client'],
+    component: Inicio
   },
   {
-    path: "/user-profile-lite",
+    path: "/mi-perfil",
     layout: DefaultLayout,
+    hasAccess: ['admin', 'prof', 'client'],
     component: UserProfileLite
-  },
-  {
-    path: "/add-new-post",
-    layout: DefaultLayout,
-    component: AddNewPost
-  },
-  {
-    path: "/errors",
-    layout: DefaultLayout,
-    component: Errors
-  },
-  {
-    path: "/components-overview",
-    layout: DefaultLayout,
-    component: ComponentsOverview
-  },
-  {
-    path: "/tables",
-    layout: DefaultLayout,
-    component: Tables
-  },
-  {
-    path: "/blog-posts",
-    layout: DefaultLayout,
-    component: BlogPosts
   }
 ];
