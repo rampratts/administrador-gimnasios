@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('../db/db');
 const Auth = require('../middleware/authentication');
 
-router.post('/register',
+router.post('/register',  Auth.isAuth, Auth.isAdmin,
     check('nombre_usuario').isEmail(),
     check('email').isEmail(),
     body('contrasena').isLength({ min: 6 }),
