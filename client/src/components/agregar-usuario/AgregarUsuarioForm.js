@@ -7,16 +7,22 @@ import {
     Row,
     Col,
     FormInput,
-    FormGroup,
     FormTextarea,
     Button,
     Form,
-    FormSelect
+    FormSelect,
+    FormCheckbox,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+    Fade
   } from "shards-react";
 import { useForm } from 'react-hook-form';
 
 const AgregarUsuarioForm = () => {
     const { register, handleSubmit, errors} = useForm();
+    const [tipoUsuario, setTipoUsuario] = useState('');
+    const [calificado, setCalificado] = useState(false);
 
     const onSubmit = data => {
         console.log(data);
@@ -33,25 +39,29 @@ const AgregarUsuarioForm = () => {
                     <Col>
                         <Form onSubmit={handleSubmit(onSubmit)}>
                             <Row form>
-                                {/* First Name */}
+                                {/* Nombre */}
                                 <Col md="6" className="form-group">
                                     <label htmlFor="feFirstName">Nombre</label>
                                     <FormInput
                                         id="feFirstName"
                                         placeholder="Nombre"
                                         name="nombre"
-                                        innerRef={register}
+                                        innerRef={register({required: 'Por favor indique un nombre'})}
+                                        invalid={errors.nombre}
                                     />
+                                    {errors.nombre && <div class="invalid-feedback">{errors.nombre.message}</div>}
                                 </Col>
-                                {/* Last Name */}
+                                {/* Apellido */}
                                 <Col md="6" className="form-group">
                                     <label htmlFor="feLastName">Apellido</label>
                                     <FormInput
                                         id="feLastName"
                                         placeholder="Apellido"
                                         name="apellido"
-                                        innerRef={register}
+                                        innerRef={register({required: 'Por favor indique un apellido'})}
+                                        invalid={errors.apellido}
                                     />
+                                    {errors.apellido && <div class="invalid-feedback">{errors.apellido.message}</div>}
                                 </Col>
                             </Row>
                             <Row form>
@@ -63,64 +73,149 @@ const AgregarUsuarioForm = () => {
                                         id="feEmail"
                                         placeholder="Email"
                                         name="email"
-                                        innerRef={register}
+                                        innerRef={register({required: 'Indique un email'})}
                                         autoComplete="email"
+                                        invalid={errors.email}
                                     />
+                                    {errors.email && <div class="invalid-feedback">{errors.email.message}</div>}
                                 </Col>
-                                {/* Password */}
-                                <Col md="6" className="form-group">
-                                    <label htmlFor="fePassword">Password</label>
+                                {/* Fecha Nacimiento */}
+                                <Col md="6" lg="3" className="form-group">
+                                    <label htmlFor="fecha-nacimiento">Fecha de Nacimiento</label>
                                     <FormInput
-                                        type="password"
-                                        id="fePassword"
-                                        placeholder="Password"
-                                        value="EX@MPL#P@$$w0RD"
-                                        onChange={() => {}}
-                                        autoComplete="current-password"
-                                    />
+                                      id="fecha-nacimiento"
+                                      type="date"
+                                      name="fecha_nacimiento"
+                                      innerRef={register({required: 'Seleccione una fecha'})}
+                                      invalid={errors.fecha_nacimiento}
+                                      />
+                                    {errors.fecha_nacimiento && <div class="invalid-feedback">{errors.fecha_nacimiento.message}</div>}
                                 </Col>
+
+                                {/*Fecha Inicio*/}
+                                <Col md="6" lg="3" className="form-group">
+                                <label htmlFor="fecha-inicio">Fecha de Inicio</label>
+                                <FormInput
+                                  id="fecha-inicio"
+                                  type="date"
+                                  name="fecha_inicio"
+                                  innerRef={register({required: 'Seleccione una fecha'})}
+                                  invalid={errors.fecha_inicio}
+                                  />
+                                  {errors.fecha_inicio && <div class="invalid-feedback">{errors.fecha_inicio.message}</div>}
+                            </Col>
                             </Row>
-                            <FormGroup>
-                                <FormInput 
-                                    type="date"
-                                    name="fecha_nacimiento"
-                                    innerRef={register}
-                                />
-                            </FormGroup>
                             <Row form>
-                                {/* City */}
+                                {/* Documento Identidad */}
                                 <Col md="6" className="form-group">
-                                    <label htmlFor="feCity">City</label>
+                                    <label htmlFor="documento-identidad">Documento de Identidad</label>
                                     <FormInput
-                                        id="feCity"
-                                        placeholder="City"
-                                        onChange={() => {}}
+                                        id="documento-identidad"
+                                        placeholder="Documento de Identidad"
+                                        name="documento_identidad"
+                                        innerRef={register({required: 'Indique un documento de identidad'})}
+                                        invalid={errors.documento_identidad}
                                     />
+                                    {errors.documento_identidad && <div class="invalid-feedback">{errors.documento_identidad.message}</div>}
                                 </Col>
-                                {/* State */}
+                                {/* Tipo Usuario */}
                                 <Col md="4" className="form-group">
-                                    <label htmlFor="feInputState">State</label>
-                                    <FormSelect id="feInputState">
-                                        <option>Choose...</option>
-                                        <option>...</option>
+                                    <label htmlFor="tipo-usuario">Tipo Usuario</label>
+                                    <FormSelect id="tipo-usuario" name="tipo_usuario" innerRef={register({required: 'Seleccione tipo de usuario'})} invalid={errors.tipo_usuario} onChange={e => setTipoUsuario(e.target.value)}>
+                                        <option value="" selected disabled hidden>Seleccionar...</option>
+                                        <option value="cliente">Cliente</option>
+                                        <option value="prof">Profesor</option>
+                                        <option value="admin">Administrativo</option>
                                     </FormSelect>
-                                </Col>
-                                {/* Zip Code */}
-                                <Col md="2" className="form-group">
-                                <label htmlFor="feZipCode">Zip</label>
-                                    <FormInput
-                                        id="feZipCode"
-                                        placeholder="Zip"
-                                        onChange={() => {}}
-                                    />
+                                    {errors.tipo_usuario && <div class="invalid-feedback">{errors.tipo_usuario.message}</div>}
                                 </Col>
                             </Row>
                             <Row form>
-                                {/* Description */}
-                                <Col md="12" className="form-group">
-                                    <label htmlFor="feDescription">Description</label>
-                                    <FormTextarea id="feDescription" rows="5" />
-                                </Col>
+                                {/* Area */}
+                                {
+                                  (tipoUsuario === 'admin') || (tipoUsuario === 'prof') ?
+                                    <Col md="6" className="form-group">
+                                      <label htmlFor="feDescription">Area</label>
+                                      <FormTextarea id="feDescription" rows="2" name="area" invalid={errors.area} innerRef={register({required: 'Indique el area'})}/>
+                                      {errors.area && <div class="invalid-feedback">{errors.area.message}</div>}
+                                    </Col>
+                                  :
+                                    <React.Fragment/>
+                                }
+
+                                {/* Calificado (prof) */}
+                                {
+                                  tipoUsuario === 'prof' ?
+                                    <Col sm="6">
+                                    <p className="mb-2">Calificado</p>
+                                      <FormCheckbox
+                                        toggle
+                                        name="calificado"
+                                        innerRef={register}
+                                        checked={calificado}
+                                        onChange={e => setCalificado(!calificado)}
+                                        />
+                                    </Col>
+                                  :
+                                    <React.Fragment/>
+                                }
+
+                                 {/* Cliente  */}
+                                 {
+                                  tipoUsuario === 'cliente' ?
+                                  <Fade>
+                                    <Row className="mb-2">
+                                      <Col lg="4">
+                                        <InputGroup className="mb-2">
+                                          <InputGroupAddon type="prepend">
+                                            <InputGroupText>$</InputGroupText>
+                                          </InputGroupAddon>
+                                          <FormInput
+                                            id="pago-mensual"
+                                            placeholder="Pago Mensual"
+                                            name="pago_mensual"
+                                            innerRef={register({required: 'Indique el pago mensual'})}
+                                            type="number"
+                                            invalid={errors.pago_mensual}
+                                            />
+                                            {errors.pago_mensual && <div class="invalid-feedback">{errors.pago_mensual.message}</div>}
+                                        </InputGroup>
+                                      </Col>
+
+                                      <Col lg="4">
+                                        <InputGroup className="mb-2">
+                                          <InputGroupAddon type="prepend">
+                                            <InputGroupText>Kg.</InputGroupText>
+                                          </InputGroupAddon>
+                                          <FormInput
+                                            id="peso-actual"
+                                            placeholder="Peso Actual"
+                                            name="peso_actual"
+                                            innerRef={register}
+                                            type="number"
+                                            />
+                                        </InputGroup>
+                                      </Col>
+
+                                      <Col lg="4">
+                                        <InputGroup className="mb-2">
+                                          <InputGroupAddon type="prepend">
+                                            <InputGroupText>IMC.</InputGroupText>
+                                          </InputGroupAddon>
+                                          <FormInput
+                                            id="imc"
+                                            placeholder="IMC"
+                                            name="imc"
+                                            innerRef={register}
+                                            type="number"
+                                            />
+                                        </InputGroup>
+                                      </Col>
+                                    </Row>
+                                  </Fade>
+                                  :
+                                    <React.Fragment/>
+                                }
                             </Row>
                             <Button theme="accent" type="submit">Agregar Usuario</Button>
                             </Form>
