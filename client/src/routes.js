@@ -7,6 +7,7 @@ import { DefaultLayout } from "./layouts";
 // Route Views
 import UserProfileLite from "./views/UserProfileLite";
 import Inicio from "./views/Inicio";
+import RegistrarUsuario from "./views/RegistrarUsuario";
 
 export default [
   {
@@ -27,5 +28,11 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['admin', 'prof', 'client'],
     component: UserProfileLite
+  },
+  {
+    path: "/agregar-usuario",
+    layout: DefaultLayout,
+    hasAccess: ['admin'],
+    component: RegistrarUsuario
   }
 ];

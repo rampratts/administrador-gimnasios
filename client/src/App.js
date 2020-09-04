@@ -95,7 +95,6 @@ const FullApp = () => {
     return(
       <Router basename={process.env.REACT_APP_BASENAME || ""}>
         <Switch>
-          <div>
             {filteredRoutes.map((route, index) => {
               return (
                 <Route
@@ -113,7 +112,6 @@ const FullApp = () => {
               );
             })}
             <Route exact component={withTracker(props => <Redirect to="/inicio"/>)}/>
-          </div>
         </Switch>
       </Router>
     )
