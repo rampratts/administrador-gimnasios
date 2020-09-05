@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
     <UserProvider>
-        <App/>
+        <App />
     </UserProvider>,
     document.getElementById('root')
 );
