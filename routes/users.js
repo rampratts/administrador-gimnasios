@@ -42,7 +42,7 @@ router.post('/register',  Auth.isAuth, Auth.isAdmin,
                 results: "User created"
             });
         } catch (error) {
-            res.send(error);
+            res.status(400).send(error);
         }
 })
 

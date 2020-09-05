@@ -79,6 +79,19 @@ const DatosIniciales = ({setData}) => {
                               />
                               {errors.email && <div class="invalid-feedback">{errors.email.message}</div>}
                           </Col>
+                          {/* Email */}
+                          <Col md="6" className="form-group">
+                            <label htmlFor="nombre-usuario">Nombre de Usuario</label>
+                            <FormInput
+                                type="text"
+                                id="nombre-usuario"
+                                placeholder="Nombre de Usuario"
+                                name="nombre_usuario"
+                                innerRef={register({required: 'Escriba un nombre de usuario'})}
+                                invalid={errors.nombre_usuario}
+                            />
+                            {errors.nombre_usuario && <div class="invalid-feedback">{errors.nombre_usuario.message}</div>}
+                          </Col>
                           {/* Fecha Nacimiento */}
                           <Col md="6" lg="3" className="form-group">
                               <label htmlFor="fecha-nacimiento">Fecha de Nacimiento</label>
@@ -91,7 +104,6 @@ const DatosIniciales = ({setData}) => {
                                 />
                               {errors.fecha_nacimiento && <div class="invalid-feedback">{errors.fecha_nacimiento.message}</div>}
                           </Col>
-
                           {/*Fecha Inicio*/}
                           <Col md="6" lg="3" className="form-group">
                           <label htmlFor="fecha-inicio">Fecha de Inicio</label>
@@ -117,6 +129,18 @@ const DatosIniciales = ({setData}) => {
                                   invalid={errors.documento_identidad}
                               />
                               {errors.documento_identidad && <div class="invalid-feedback">{errors.documento_identidad.message}</div>}
+                          </Col>
+                          {/* Documento Identidad */}
+                          <Col md="6" className="form-group">
+                              <label htmlFor="tel">Telefono</label>
+                              <FormInput
+                                  id="tel"
+                                  placeholder="Telefono"
+                                  name="telefono"
+                                  innerRef={register({required: 'Indique un número de teléfono'})}
+                                  invalid={errors.telefono}
+                              />
+                              {errors.telefono && <div class="invalid-feedback">{errors.telefono.message}</div>}
                           </Col>
                           {/* Tipo Usuario */}
                           <Col md="4" className="form-group">

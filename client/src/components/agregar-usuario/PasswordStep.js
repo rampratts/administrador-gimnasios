@@ -24,7 +24,6 @@ const PasswordStep = ({setData}) => {
     if (data.primera_contraseña !== data.segunda_contrasena) {
       setPasswordError(true);
     } else {
-      console.log(data.primera_contraseña)
       setData(data.primera_contraseña);
     }
   }

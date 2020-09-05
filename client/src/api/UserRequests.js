@@ -8,6 +8,10 @@ class UserRequests {
     static async verifyToken() {
         return await request.post('users/verifyToken');
     }
+
+    static async registerUser(user) {
+        return await request.post('users/register', user);
+    }
 }
 
 export default UserRequests;
