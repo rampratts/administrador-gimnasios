@@ -42,7 +42,7 @@ const BajaUsuario = ({history}) => {
         setError(true);
         setIsloading(false)
       } else {
-        const deleteRes = await UserRequests.eliminarUsuario();
+        await UserRequests.eliminarUsuario();
         setUserInfo({...userInfo, isLogged: false})
         history.push('/login')
       }

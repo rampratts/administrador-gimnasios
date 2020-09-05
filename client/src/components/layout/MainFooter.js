@@ -10,7 +10,7 @@ const MainFooter = ({ contained, menuItems, copyright }) => (
         <Nav>
           {menuItems.map((item, idx) => (
             <NavItem key={idx}>
-              <NavLink tag={Link} to={item.to}>
+              <NavLink tag={Link} to={'#'}>
                 {item.title}
               </NavLink>
             </NavItem>
@@ -39,28 +39,20 @@ MainFooter.propTypes = {
 
 MainFooter.defaultProps = {
   contained: false,
-  copyright: "Copyright © 2018 DesignRevision",
+  copyright: "Proyecto Universitario - Análisis y Desarrollo de Sistemas - Uniftec - 2020",
   menuItems: [
     {
-      title: "Home",
-      to: "#"
+      title: "Juan Ramiro Meneses Prattes",
+      to: "rampratts@gmail.com"
     },
     {
-      title: "Services",
-      to: "#"
+      title: "Fernando Rodríguez Binagui",
+      to: "fernandobolso@hotmail.com"
     },
     {
-      title: "About",
-      to: "#"
+      title: "Federico Mathías De Souza García",
+      to: "feffee22@gmail.com"
     },
-    {
-      title: "Products",
-      to: "#"
-    },
-    {
-      title: "Blog",
-      to: "#"
-    }
   ]
 };
 
