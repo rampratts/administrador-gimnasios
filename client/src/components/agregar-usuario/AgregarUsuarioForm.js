@@ -7,6 +7,7 @@ import Spinner from '../utils/Spinner';
 import DatosIniciales from './DatosIniciales';
 import PasswordStep from './PasswordStep';
 import request from '../../api/axios.instance';
+import UserRequests from '../../api/UserRequests';
 
 const AgregarUsuarioForm = () => {
     const [contrasenaStep, setContrasenaStep] = useState(false);
@@ -14,11 +15,22 @@ const AgregarUsuarioForm = () => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [isLoading, setIsloading] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const saveData = data => {
+    const saveData = async data => {
+        setIsloading(true);
         setAlertOpen(false);
-        setFormData(data);
-        setContrasenaStep(true);
+        const res = await UserRequests.comprobarNombreUsuario(data.nombre_usuario);
+        setIsloading(false);
+
+        if(!res.data.disponible) {
+            setSuccess(false);
+            setErrorMessage('El nombre de usuario ya está registrado. Por favor elige otro.');
+            setAlertOpen(true);
+        } else {
+            setFormData(data);
+            setContrasenaStep(true);
+        }
     }
 
     const saveContrasena = contrasena => {
@@ -34,8 +46,8 @@ const AgregarUsuarioForm = () => {
             console.log(res);
             setSuccess(true);
         } catch (error) {
-            console.log(error)
             setSuccess(false);
+            setErrorMessage('Hubo un error al procesar la solicitud. Por favor intenta de nuevo.');
         }
 
         setFormData({});
@@ -54,7 +66,7 @@ const AgregarUsuarioForm = () => {
             {success ?
                 <span>El usuario fue creado correctamente.</span>
                 :
-                <span>Hubo un error al procesar la solicitud. Por favor intenta de nuevo.</span>
+                <span>{errorMessage}</span>
             }
         </Alert>
         <Card small className="mb-4 pt-3">

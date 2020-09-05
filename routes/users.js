@@ -46,6 +46,21 @@ router.post('/register',  Auth.isAuth, Auth.isAdmin,
         }
 })
 
+router.post('/comprobar-nombre-disponible', Auth.isAuth, Auth.isAdmin, async (req, res) => {
+    const { nombre_usuario } = req.body;
+    
+    try {
+        const { count } = (await pool.query('SELECT count(*) FROM usuario WHERE nombre_usuario = $1',[nombre_usuario])).rows[0];
+        
+        if(count == 0) {
+            res.status(200).send({disponible: true});
+        } else {
+            res.status(200).send({disponible: false});
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
 
 router.post('/login',
     check('nombre_usuario').exists(),
