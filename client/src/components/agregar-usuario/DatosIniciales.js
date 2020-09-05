@@ -25,7 +25,6 @@ const DatosIniciales = ({setData}) => {
   const [calificado, setCalificado] = useState(false);
 
   const saveData = data => {
-    console.log(data);
     setData(data);
 }
 

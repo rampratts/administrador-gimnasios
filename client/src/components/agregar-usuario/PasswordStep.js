@@ -9,16 +9,24 @@ import {
   FormInput,
   Button,
   Form,
-  Fade
+  Fade,
+  Alert
 } from "shards-react";
 import { useForm } from 'react-hook-form';
 
 
 const PasswordStep = ({setData}) => {
   const { register, handleSubmit, errors} = useForm();
+  const [passwordError, setPasswordError] = useState(false);
 
   const onSubmit = (data) => {
-    setData(data);
+    setPasswordError(false);
+    if (data.primera_contraseña !== data.segunda_contrasena) {
+      setPasswordError(true);
+    } else {
+      console.log(data.primera_contraseña)
+      setData(data.primera_contraseña);
+    }
   }
 
   return (
@@ -56,6 +64,9 @@ const PasswordStep = ({setData}) => {
                     />
                     {errors.segunda_contrasena && <div class="invalid-feedback">{errors.segunda_contrasena.message}</div>}
                 </Col>
+                <Alert theme="danger" open={passwordError}>
+                  Las contraseñas no coinciden.
+                </Alert>
                 <Button theme="accent" className="float-right" type="submit">Agregar Usuario</Button>
               </Form>
             </Col>

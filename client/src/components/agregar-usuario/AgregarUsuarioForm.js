@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
     Card, Alert,
   } from "shards-react";
+import Spinner from '../utils/Spinner';
 
 import DatosIniciales from './DatosIniciales';
 import PasswordStep from './PasswordStep';
@@ -9,28 +10,29 @@ import PasswordStep from './PasswordStep';
 const AgregarUsuarioForm = () => {
     const [contrasenaStep, setContrasenaStep] = useState(false);
     const [formData, setFormData] = useState({});
-    const [contrasena, setContrasena] = useState('');
     const [alertOpen, setAlertOpen] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
 
     const saveData = data => {
         setFormData(data);
         setContrasenaStep(true);
     }
 
-    const saveContrasena = pass => {
-      setContrasena(pass);
-      onSubmit();
+    const saveContrasena = contrasena => {
+      onSubmit(contrasena);
     }
 
-    const onSubmit = () => {
-      //submitear data
-      //mostrar spinner
-      //mostrar mensaje de success
-      //limpiar state
-      setFormData({});
-      setContrasena('');
-      setContrasenaStep(false);
-      setAlertOpen(true);
+    const onSubmit = (contrasena) => {
+        const newUserData = {...formData, contrasena};
+        console.log(newUserData)
+        setIsloading(true); 
+        setTimeout(() => {
+            setFormData({});
+            setContrasenaStep(false);
+            setAlertOpen(true);
+            setIsloading(false); 
+        }, 5000)
+ 
     }
 
     const dismiss = () => {
@@ -43,6 +45,9 @@ const AgregarUsuarioForm = () => {
           El usuario fue creado correctamente.
         </Alert>
         <Card small className="mb-4 pt-3">
+          {
+              isLoading ? <Spinner /> : <React.Fragment/>
+          }  
           {
             !contrasenaStep ?
             <DatosIniciales setData={saveData}/>
