@@ -4,7 +4,7 @@ export function getSidebarNavItems() {
       title: "Inicio",
       htmlBefore: '<i class="material-icons">home</i>',
       to: "/inicio",
-      hasAccess: ['admin', 'prof', 'client']
+      hasAccess: ['admin', 'prof', 'cliente']
     },
     {
       title: "Agregar Usuario",
@@ -16,7 +16,7 @@ export function getSidebarNavItems() {
       title: "Mi Perfil",
       htmlBefore: '<i class="material-icons">person</i>',
       to: "/mi-perfil",
-      hasAccess: ['admin', 'prof', 'client']
+      hasAccess: ['admin', 'prof', 'cliente']
     }
   ];
 }
@@ -30,6 +30,6 @@ export function getProfSidebarNavItems() {
 }
 
 export function getClientSidebarNavItems() {
-  return getSidebarNavItems().filter(item => item.hasAccess.includes('client'));
+  return getSidebarNavItems().filter(item => item.hasAccess.includes('cliente'));
 }
 

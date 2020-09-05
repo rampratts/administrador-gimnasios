@@ -14,19 +14,19 @@ export default [
     path: "/",
     exact: true,
     layout: DefaultLayout,
-    hasAccess: ['admin', 'prof', 'client'],
+    hasAccess: ['admin', 'prof', 'cliente'],
     component: () => <Redirect to="/inicio" />
   },
   {
     path: "/inicio",
     layout: DefaultLayout,
-    hasAccess: ['admin', 'prof', 'client'],
+    hasAccess: ['admin', 'prof', 'cliente'],
     component: Inicio
   },
   {
     path: "/mi-perfil",
     layout: DefaultLayout,
-    hasAccess: ['admin', 'prof', 'client'],
+    hasAccess: ['admin', 'prof', 'cliente'],
     component: UserProfileLite
   },
   {

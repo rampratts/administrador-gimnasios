@@ -16,6 +16,10 @@ class UserRequests {
     static async comprobarNombreUsuario(nombre_usuario) {
         return await request.post('users/comprobar-nombre-disponible', {nombre_usuario});
     }
+
+    static async eliminarUsuario() {
+        return await request.delete('users/');
+    }
 }
 
 export default UserRequests;

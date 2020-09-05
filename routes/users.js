@@ -73,17 +73,22 @@ router.post('/login',
 
         const { nombre_usuario, contrasena } = req.body;
         try {
-            const user = await pool.query('SELECT id, nombre_usuario, tipo_usuario, contrasena FROM usuario WHERE nombre_usuario = $1', [nombre_usuario]);
-            const validPassword = await bcrypt.compare(contrasena, user.rows[0].contrasena);
+            const user = (await pool.query('SELECT id, nombre_usuario, tipo_usuario, contrasena FROM usuario WHERE nombre_usuario = $1', [nombre_usuario])).rows[0];
+            
+            if(!user) {
+                return res.status(200).send({error: 'No se encuentra el usuario'});
+            }
+
+            const validPassword = await bcrypt.compare(contrasena, user.contrasena);
     
             if(!validPassword) {
                 return res.status(400).send({'error': 'Invalid credentials'});
             }
             
             const jwtPayload = {
-                id: user.rows[0].id,
-                nombre_usuario: user.rows[0].nombre_usuario,
-                tipo_usuario: user.rows[0].tipo_usuario,
+                id: user.id,
+                nombre_usuario: user.nombre_usuario,
+                tipo_usuario: user.tipo_usuario,
             }
 
             const token = await jwt.sign(jwtPayload, process.env.JWT_SECRET);
@@ -95,21 +100,20 @@ router.post('/login',
 
 });
 
-router.delete('/', Auth.isAuth, Auth.isAdmin, async (req, res) => {
+router.delete('/', Auth.isAuth, async (req, res) => {
     try {
-        const { userId, tipo_usuario } = req.body;
-        switch(tipo_usuario) {
+        switch(req.user.tipo_usuario) {
             case 'admin':
-                await pool.query('DELETE FROM administrativo WHERE usuario_id = $1', [userId]);
+                await pool.query('DELETE FROM administrativo WHERE usuario_id = $1', [req.user.id]);
                 break
             case 'prof':
-                await pool.query('DELETE FROM profesor WHERE usuario_id = $1', [userId]);
+                await pool.query('DELETE FROM profesor WHERE usuario_id = $1', [req.user.id]);
                 break
             case 'cliente':
-                await pool.query('DELETE FROM cliente WHERE usuario_id = $1', [userId]);
+                await pool.query('DELETE FROM cliente WHERE usuario_id = $1', [req.user.id]);
                 break
         }
-        await pool.query('DELETE FROM usuario WHERE id = $1', [userId]);
+        await pool.query('DELETE FROM usuario WHERE id = $1', [req.user.id]);
         res.status(200).send({
             status: "OK",
             statusCode: 200,

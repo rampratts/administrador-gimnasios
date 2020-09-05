@@ -9,7 +9,7 @@ let _store = {
   navItems: {
     'admin': getAdminSidebarNavItems(),
     'prof': getProfSidebarNavItems(),
-    'client': getClientSidebarNavItems()
+    'cliente': getClientSidebarNavItems()
   }
 };
 

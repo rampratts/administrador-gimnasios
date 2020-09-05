@@ -28,14 +28,16 @@ class SidebarNavItems extends React.Component {
   }
 
   onChange() {
+    const userInfo = this.context;
     this.setState({
       ...this.state,
-      navItems: Store.getSidebarItems()
+      navItems: Store.getSidebarItems(userInfo[0].tipo_usuario)
     });
   }
 
   render() {
     const { navItems: items } = this.state;
+    console.log(items)
     return (
       <div className="nav-wrapper">
         <Nav className="nav--no-borders flex-column">
