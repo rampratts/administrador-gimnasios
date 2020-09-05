@@ -1,5 +1,5 @@
 {
-  "name": "pern-starter-boilerplate",
+  "name": "admin-gimnasios-uniftect",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rampratts/pern-starter-boilerplate.git"
+    "url": "git+https://github.com/rampratts/administrador-gimnasios.git"
   },
   "author": "rampratts",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rampratts/pern-starter-boilerplate/issues"
+    "url": "https://github.com/rampratts/administrador-gimnasios.git/issues"
   },
-  "homepage": "https://github.com/rampratts/pern-starter-boilerplate#readme",
+  "homepage": "https://github.com/rampratts/administrador-gimnasios.git#readme",
   "dependencies": {
     "concurrently": "^5.2.0",
     "bcryptjs": "^2.4.3",
