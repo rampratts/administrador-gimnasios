@@ -11,6 +11,8 @@ import {
 } from "shards-react";
 import { UserContext } from "../../../../context/UserContext";
 
+import userAvatar from "./../../../../images/avatars/0.jpg";
+
 export default class UserActions extends React.Component {
   static contextType = UserContext;
 
@@ -44,7 +46,7 @@ export default class UserActions extends React.Component {
           <DropdownToggle caret tag={NavLink} className="text-nowrap px-3">
             <img
               className="user-avatar rounded-circle mr-2"
-              src={require("./../../../../images/avatars/0.jpg")}
+              src={userAvatar}
               alt="User Avatar"
             />{" "}
             <span className="d-none d-md-inline-block">{userInfo[0].nombre_usuario}</span>

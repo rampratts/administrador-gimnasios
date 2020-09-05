@@ -8,6 +8,7 @@ import {
   Progress
 } from "shards-react";
 import { UserContext } from "../../context/UserContext";
+import userAvatar from "./../../images/avatars/0.jpg";
 
 const UserDetails = ({ userDetails }) => {
   const [userInfo] = useContext(UserContext);
@@ -63,7 +64,7 @@ UserDetails.propTypes = {
 UserDetails.defaultProps = {
   userDetails: {
     name: "Sierra Brooks",
-    avatar: require("./../../images/avatars/0.jpg"),
+    avatar: userAvatar,
     jobTitle: "Cliente",
     performanceReportTitle: "Metas",
     performanceReportValue: 74,
