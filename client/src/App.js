@@ -94,25 +94,25 @@ const FullApp = () => {
 
     return(
       <Router basename={process.env.REACT_APP_BASENAME || ""}>
-        <div>
-          {filteredRoutes.map((route, index) => {
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                component={withTracker(props => {
-                  return (
-                    <route.layout {...props}>
-                      <route.component {...props} />
-                    </route.layout>
-                  );
-                })}
-              />
-            );
-          })}
-          <Route component={() => <Redirect to="/"/>}/>
-        </div>
+        <Switch>
+            {filteredRoutes.map((route, index) => {
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  component={withTracker(props => {
+                    return (
+                      <route.layout {...props}>
+                        <route.component {...props} />
+                      </route.layout>
+                    );
+                  })}
+                />
+              );
+            })}
+            <Route exact component={withTracker(props => <Redirect to="/inicio"/>)}/>
+        </Switch>
       </Router>
     )
   }

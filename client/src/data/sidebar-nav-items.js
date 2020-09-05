@@ -9,13 +9,7 @@ export function getSidebarNavItems() {
     {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
-      to: "/#",
-      hasAccess: ['admin']
-    },
-    {
-      title: "Eliminar Usuario",
-      htmlBefore: '<i class="material-icons">person_remove</i>',
-      to: "/#",
+      to: "/agregar-usuario",
       hasAccess: ['admin']
     },
     {
