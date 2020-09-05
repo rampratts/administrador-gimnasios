@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('../db/db');
 const Auth = require('../middleware/authentication');
 
-router.post('/register',
+router.post('/register',  Auth.isAuth, Auth.isAdmin,
     check('nombre_usuario').isEmail(),
     check('email').isEmail(),
     body('contrasena').isLength({ min: 6 }),
@@ -79,7 +79,7 @@ router.post('/login',
 
 });
 
-router.delete('/', Auth.isAuth, async (req, res) => {
+router.delete('/', Auth.isAuth, Auth.isAdmin, async (req, res) => {
     try {
         const { userId, tipo_usuario } = req.body;
         switch(tipo_usuario) {
