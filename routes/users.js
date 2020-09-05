@@ -79,7 +79,7 @@ router.post('/login',
 
 });
 
-router.delete('/', Auth.isAuth, async (req, res) => {
+router.delete('/', Auth.isAuth, Auth.isAdmin, async (req, res) => {
     try {
         const { userId, tipo_usuario } = req.body;
         switch(tipo_usuario) {
