@@ -51,8 +51,8 @@ CREATE TABLE clases (
 	lunes boolean DEFAULT false,
 	martes boolean DEFAULT false,
 	miercoles boolean DEFAULT false,
-	jueves boolean DEFAULT false
-	viernes boolean DEFAULT false
+	jueves boolean DEFAULT false,
+	viernes boolean DEFAULT false,
 	sabado boolean DEFAULT false,
 	domingo boolean DEFAULT false,
 	profesor_id UUID REFERENCES profesor(id) NOT NULL
