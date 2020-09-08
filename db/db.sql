@@ -42,3 +42,17 @@ CREATE TABLE cliente (
   	imc decimal,
   	usuario_id UUID REFERENCES usuario(id) NOT NULL 
 );
+
+CREATE TABLE clases (
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	nombre varchar NOT NULL,
+	descripcion varchar,
+	horario date,
+	profesor_id UUID REFERENCES profesor(id) NOT NULL
+);
+
+CREATE TABLE cliente-clases (
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	cliente_id UUID REFERENCES cliente(id) NOT NULL,
+	clases_id UUID REFERENCES clases(id) NOT NULL
+);
