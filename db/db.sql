@@ -56,6 +56,7 @@ CREATE TABLE clases (
 	sabado boolean DEFAULT false,
 	domingo boolean DEFAULT false,
 	profesor_id UUID REFERENCES profesor(id) NOT NULL
+
 );
 
 CREATE TABLE cliente_clases (
