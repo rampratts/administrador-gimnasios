@@ -47,6 +47,13 @@ class Auth {
             res.sendStatus(401);
         }
     }
+    static isProfOrAdmin(req, res, next) {
+        if(req.user.tipo_usuario === 'prof' || req.user.tipo_usuario === 'admin'){
+            next();
+        }
+     else {
+        res.sendStatus(401);
+    }
 }
-
+}
 module.exports = Auth;
