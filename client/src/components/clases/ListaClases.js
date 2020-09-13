@@ -1,25 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import {
-  Card,
-  CardHeader,
-  ListGroup,
-  ListGroupItem,
+  Row
 } from "shards-react";
+import Spinner from '../utils/Spinner';
+import ClaseItem from './ClaseItem';
+import ClasesRequests from "../../api/ClasesRequests";
 
 const ListaClases = () => {
-  return (
-    <Card small className="mb-4">
-      <CardHeader className="border-bottom">
-        <h4 className="m-0 ml-3">Clases</h4>
-      </CardHeader>
-      <ListGroup flush>
-        <ListGroupItem>
-          <p>Componente inicial para lista de clases</p>
-        </ListGroupItem>
-      </ListGroup>
-    </Card>
-  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [clases, setClases] = useState([]);
+  const [clasesDeUsuario, setClasesDeUsuario] = useState([]);
+  
+  const loadClases = async () => {
+    setIsLoading(true);
+    const res = await ClasesRequests.getClases();
+    const clasesDeUsuarioRes = await ClasesRequests.clasesDeUsuario();
+    setClases(res);
+    setClasesDeUsuario(clasesDeUsuarioRes);
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    loadClases()
+  }, [])
+
+  if(isLoading){
+    return (
+      <Spinner />
+    )
+  } else {
+    return (
+      <Row>
+        {
+          clases.length ? 
+          clases.map(clase => (
+            <ClaseItem clase={clase} registrado={clasesDeUsuario.includes(clase.id)} />
+          ))
+          :
+          <p>No hay clases registradas en el sistema.</p>
+        }
+      </Row>
+    ); 
+  } 
 }
 
 export default ListaClases;
