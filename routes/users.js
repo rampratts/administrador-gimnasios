@@ -137,4 +137,16 @@ router.post('/verifyToken', Auth.isAuth, (req, res) => {
     }
 })
 
+router.get('/get', Auth.isAuth, async(req,res) => {
+    try {
+        const profesores = (await pool.query('SELECT id,nombre,area FROM profesor')).rows;
+        if(!profesores.length){
+            return res.status(200).send({error: 'No existen profesores',});
+        }
+          res.send(profesores);
+    } catch(error){
+        res.status(400).send(error);
+    }
+})
+
 module.exports = router;
