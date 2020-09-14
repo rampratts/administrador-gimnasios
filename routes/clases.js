@@ -9,11 +9,11 @@ const { route } = require('./users');
 
 router.post('/register', Auth.isAuth, Auth.isProfOrAdmin, async(req,res)=>{
     
-    const { nombre, descripcion, horario, s, m, t, w, th, f, st, profesor } = req.body;
+    const { nombre, descripcion, horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo, profesor } = req.body;
    
     try {
         const claseid=uuidv4();
-        await pool.query("INSERT INTO clases VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [claseid,nombre,descripcion,horario,s,m,t,w,th,f,st,profesor]);            
+        await pool.query("INSERT INTO clases VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [claseid,nombre,descripcion,horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo,profesor]);            
         res.send({
             status: "OK",
             statusCode: 200,
@@ -26,8 +26,8 @@ router.post('/register', Auth.isAuth, Auth.isProfOrAdmin, async(req,res)=>{
 
 router.get('/get', Auth.isAuth, async(req,res)=>{
     try{
-        const clases = await pool.query('SELECT id,nombre,descripcion,horario,s,m,t,w,th,f,st,profesor FROM clases');
-        if(!clases){
+        const clases = await pool.query('SELECT id,nombre,descripcion,horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo,profesor FROM clases').rows;
+        if(!clases.lenght){
            return res.status(200).send({error: 'No hay clases disponibles',});
         }
         res.send(clases);
