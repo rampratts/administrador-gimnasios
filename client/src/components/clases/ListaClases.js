@@ -14,10 +14,19 @@ const ListaClases = () => {
   
   const loadClases = async () => {
     setIsLoading(true);
-    const res = await ClasesRequests.getClases();
-    const clasesDeUsuarioRes = await ClasesRequests.clasesDeUsuario();
-    setClases(res);
-    setClasesDeUsuario(clasesDeUsuarioRes);
+
+    try {
+      const res = await ClasesRequests.getClases();
+      const clasesDeUsuarioRes = await ClasesRequests.clasesDeUsuario();
+      setClases(res.data);
+
+      clasesDeUsuarioRes.data.forEach(clase => {
+        setClasesDeUsuario([...clasesDeUsuario, clase.id])
+      });
+    } catch (error) {
+      
+    }
+
     setIsLoading(false);
   }
 

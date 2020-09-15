@@ -27,7 +27,7 @@ router.post('/', Auth.isAuth, Auth.isProfOrAdmin, async(req,res)=>{
 router.get('/', Auth.isAuth, async(req,res)=>{
     try{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const clases = (await pool.query('SELECT id,nombre,descripcion,horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo,profesor FROM clases INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
+        const clases = (await pool.query('SELECT clases.id,clases.nombre,descripcion,horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo, usuario.nombre AS nombre_profesor FROM clases INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
         if(!clases.length){
            return res.status(200).send({error: 'No hay clases disponibles',});
         }
@@ -55,7 +55,7 @@ router.post('/registrar-usuario', Auth.isAuth, Auth.isClient, async (req, res) =
 })
 
 router.get('/clase-usuario', Auth.isAuth, async (req, res) => {
-    const id = req.query.id;
+    const id = req.query.id ? req.query.id : req.user.id;
 
     try {
         const clases = (await pool.query('SELECT clases.id, clases.nombre, clases.descripcion FROM CLIENTE_CLASES INNER JOIN clases ON clases_id = clases.id WHERE cliente_id = $1', [id])).rows;

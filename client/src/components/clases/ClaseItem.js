@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
     Card,
@@ -10,11 +10,13 @@ import {
     Alert
   } from "shards-react";
 import ClasesRequests from '../../api/ClasesRequests';
+import { UserContext } from '../../context/UserContext';
 
 const ClaseItem = ({clase, registrado}) => {
     const [mostrarAlert, setMostrarAlert] = useState(false);
     const [registradoConExito, setRegistradoConExito] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [userInfo, setUserInfo] = useContext(UserContext);
     const registrar = async () => {
         setIsLoading(true);
         await ClasesRequests.registrarUsuarioEnClase();
@@ -42,18 +44,21 @@ const ClaseItem = ({clase, registrado}) => {
                         {clase.domingo ? <li>Domingo</li> : ""} 
                     </ul>
                     </li>
-                    <li>Profesor: {clase.profesor}</li>
+                    <li>Profesor: {clase.nombre_profesor}</li>
                 </ul>
                 </CardBody>
                 <CardFooter className="border-top">
-                    {registrado ? 
-                        <p>Ya estás registrado en esta clase.</p>
-                        :
-                        mostrarAlert ?
-                            <Alert theme={registradoConExito ? "success" : "danger"}>{registradoConExito ? "Registrado con éxito." : "Ha ocurrido un error. Por favor vuelve a intentarlo más tarde."}</Alert>
+                    {userInfo.tipo_usuario === 'cliente' ?
+                        registrado ? 
+                            <p>Ya estás registrado en esta clase.</p>
                             :
-                            <Button className="float-right" disabled={isLoading} onClick={registrar}>Registrarme</Button>
-                        
+                            mostrarAlert ?
+                                <Alert theme={registradoConExito ? "success" : "danger"}>{registradoConExito ? "Registrado con éxito." : "Ha ocurrido un error. Por favor vuelve a intentarlo más tarde."}</Alert>
+                                :
+                                <Button className="float-right" disabled={isLoading} onClick={registrar}>Registrarme</Button>
+                            
+                        :
+                        <React.Fragment/>
                     }
 
                 </CardFooter>
