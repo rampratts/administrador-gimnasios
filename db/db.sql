@@ -61,6 +61,6 @@ CREATE TABLE clases (
 
 CREATE TABLE cliente_clases (
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
-	cliente_id UUID REFERENCES cliente(id) NOT NULL,
+	cliente_id UUID REFERENCES usuario(id) NOT NULL,
 	clases_id UUID REFERENCES clases(id) NOT NULL
 );

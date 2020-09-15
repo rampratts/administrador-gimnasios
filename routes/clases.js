@@ -38,4 +38,20 @@ router.get('/', Auth.isAuth, async(req,res)=>{
 
 })
 
+router.post('/registrar-usuario', Auth.isAuth, Auth.isClient, async (req, res) => {
+    const { claseId } = req.body;
+
+    try {
+        await pool.query('INSERT INTO cliente_clases VALUES($1, $2, $3)', [uuidv4(), req.user.id, claseId]);
+
+        res.send({
+            status: "OK",
+            statusCode: 200,
+            results: "Registrado con exito"
+        })
+    } catch (error) {
+        res.status(400).send(error);
+    }
+})
+
 module.exports = router;
