@@ -23,6 +23,8 @@ const AgregarClaseBoton = ({history}) => {
                 </Button>
             </NavLink>
         )
+    } else {
+        return (<React.Fragment></React.Fragment>)
     }
 }
 
