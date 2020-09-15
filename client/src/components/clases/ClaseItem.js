@@ -17,7 +17,7 @@ const ClaseItem = ({clase, registrado}) => {
     const [isLoading, setIsLoading] = useState(false);
     const registrar = async () => {
         setIsLoading(true);
-        const res = await ClasesRequests.registrarUsuarioEnClase();
+        await ClasesRequests.registrarUsuarioEnClase();
         setMostrarAlert(true);
         setRegistradoConExito(true);
         setIsLoading(false);

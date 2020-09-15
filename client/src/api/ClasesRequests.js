@@ -48,7 +48,7 @@ class ClasesRequests {
                         profesor: "Un profesor"
                     }
                 ])
-            }, 2000)
+            }, 500)
         })
     }
 
@@ -56,7 +56,7 @@ class ClasesRequests {
         return new Promise((resolve, reject) => {
             setTimeout(function() {
                 resolve('Registrado')
-            }, 2000);
+            }, 500);
         })
     }
 
@@ -64,7 +64,7 @@ class ClasesRequests {
         return new Promise((resolve, reject) => {
             setTimeout(function() {
                 resolve([2, 3])
-            }, 2000);
+            }, 500);
         })
     }
 }
