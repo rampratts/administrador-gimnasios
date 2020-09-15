@@ -20,6 +20,24 @@ class UserRequests {
     static async eliminarUsuario() {
         return await request.delete('users/');
     }
+
+    static async profesores() {
+        return new Promise((resolve, reject) => {
+            setTimeout(function() {
+                resolve([{
+                    id: 1,
+                    nombre: "Juan",
+                    apellido: "Perez"
+                },
+                {
+                    id: 2,
+                    nombre: "Ramiro",
+                    apellido: "Meneses"
+                }
+            ])
+            }, 500);
+        })
+    }
 }
 
 export default UserRequests;

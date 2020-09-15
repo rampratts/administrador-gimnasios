@@ -1,57 +1,66 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Card,
-  CardHeader,
-  ListGroup,
-  ListGroupItem,
-  Modal,
-  ModalHeader,
-  ModalBody,
   Button,
   Row,
   Col,
   FormInput,
   Alert,
-  Form, FormTextarea, FormCheckbox
+  Form, FormTextarea, FormCheckbox, FormSelect
 } from "shards-react";
 import { useForm } from 'react-hook-form';
 import Spinner from '../utils/Spinner';
 import UserRequests from "../../api/UserRequests";
-import { UserContext } from "../../context/UserContext";
 
-import TextInput from 'react-autocomplete-input';
-import 'react-autocomplete-input/dist/bundle.css';
-
-const AgregarClase = () => {
-    const [modalOpen, setModalOpen] = useState(false);
+const AgregarClaseForm = () => {
     const [isLoading, setIsloading] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [diasDeClase, setDiasDeClase] = useState({lunes: false, martes: false, miercoles: false, jueves: false, viernes: false, sabado: false, domingo: false});
     const [errorMessage, setErrorMessage] = useState('');
+    const [profesores, setProfesores] = useState([]);
     const { register, handleSubmit, errors} = useForm();
-    const [userInfo, setUserInfo] = useContext(UserContext);
 
-    const toggle = () => setModalOpen(!modalOpen);
+    const getProfesores = async () => {
+        setIsloading(true);
+        const res = await UserRequests.profesores();
+        setProfesores(res);
+        setIsloading(false);
+    }
+
+    useEffect(() => {
+        getProfesores();
+    },[])
 
     const onSubmit = async data => {
         console.log(data);
-      }
+        
+        setIsloading(true);
+        setTimeout(() => {
+            setSuccess(true);
+            setAlertOpen(true);
+            setIsloading(false);
+        }, 2000)
+    }
 
     return (
         <React.Fragment>
-            <Button className="my-3" onClick={toggle}>Agregar clase</Button>
-
-            <Modal open={modalOpen} toggle={toggle}>
-                <ModalHeader>Confirma que quieres darte de baja.</ModalHeader>
-                    <ModalBody>
-                    {isLoading ?  <Spinner /> : <React.Fragment/>}
-                    <p>Agrega una nueva clase en el sistema</p> 
-                    <Row>
+            <Alert theme={success ? 'success' : 'danger'} dismissible={() => setAlertOpen(false)} open={alertOpen}>
+            {success ?
+                <span>La clase fue creada correctamente.</span>
+                :
+                <span>{errorMessage}</span>
+            }
+            </Alert>
+            <Card small className="mb-4 pt-3">
+                {isLoading ?  <Spinner /> : <React.Fragment/>}
+                <Row>
                     <Col>
                         <Form onSubmit={handleSubmit(onSubmit)}>
                              {/* Nombre de clase */}
-                            <Col md="12" className="form-group">
+                            <Col md="6" className="form-group">
                                 <label htmlFor="nombre-clase">Nombre de la Clase</label>
                                 <FormInput
                                     id="nombre-clase"
@@ -65,7 +74,7 @@ const AgregarClase = () => {
                             </Col>
 
                             {/* Descripcion de clase */}
-                            <Col md="12" className="form-group">
+                            <Col md="6" className="form-group">
                                 <label htmlFor="descripcion-clase">Descripcion de la Clase</label>
                                 <FormTextarea
                                     id="descripcion-clase"
@@ -181,19 +190,24 @@ const AgregarClase = () => {
                                 </FormCheckbox>
                             </Col>
 
-                            <TextInput options={["apple", "apricot", "banana", "carrot"]} trigger=""/>
+                            <Col md="4" className="form-group">
+                              <label htmlFor="profesor">Profesor</label>
+                              <FormSelect id="profesor" name="profesor" innerRef={register({required: 'Seleccione un profesor'})} invalid={errors.profesor}>
+                                  <option value="" selected disabled hidden>Seleccionar...</option>
+                                  {profesores.map(profesor => (
+                                      <option value={profesor.id}>{profesor.nombre} {profesor.apellido}</option>
+                                  ))}
+                              </FormSelect>
+                              {errors.profesor && <div class="invalid-feedback">{errors.profesor.message}</div>}
+                            </Col>
 
-                            <Alert theme="danger" open={error}>
-                                {errorMessage}
-                            </Alert>
-                            <Button theme="danger" className="float-right" type="submit">Darme de Baja</Button>
+                            <Button className="float-right mb-3 mr-3" type="submit">Agregar Clase</Button>
                         </Form>
                     </Col>
-                    </Row>
-                </ModalBody>
-          </Modal>
+                </Row>
+            </Card>
         </React.Fragment>
     )
 }
 
-export default AgregarClase;
+export default AgregarClaseForm;
