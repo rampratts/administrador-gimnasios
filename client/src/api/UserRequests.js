@@ -22,21 +22,7 @@ class UserRequests {
     }
 
     static async profesores() {
-        return new Promise((resolve, reject) => {
-            setTimeout(function() {
-                resolve([{
-                    id: 1,
-                    nombre: "Juan",
-                    apellido: "Perez"
-                },
-                {
-                    id: 2,
-                    nombre: "Ramiro",
-                    apellido: "Meneses"
-                }
-            ])
-            }, 500);
-        })
+        return await request.get('users/profesores');
     }
 }
 

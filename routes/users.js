@@ -108,9 +108,11 @@ router.delete('/', Auth.isAuth, async (req, res) => {
                 break
             case 'prof':
                 await pool.query('DELETE FROM profesor WHERE usuario_id = $1', [req.user.id]);
+                await pool.query('DELETE FROM clases WHERE profesor_id = $1', [req.user.id]);
                 break
             case 'cliente':
                 await pool.query('DELETE FROM cliente WHERE usuario_id = $1', [req.user.id]);
+                await pool.query('DELETE FROM cliente_clases WHERE cliente_id = $1', [req.user.id]);
                 break
         }
         await pool.query('DELETE FROM usuario WHERE id = $1', [req.user.id]);
@@ -141,7 +143,7 @@ router.get('/profesores', Auth.isAuth, async(req,res) => {
     try {
         const {gimnasio_id} = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
        
-        const profesores = (await pool.query('SELECT usuario.id,usuario.nombre,usuario.apellido,area,calificado FROM profesor INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
+        const profesores = (await pool.query('SELECT profesor.id,usuario.nombre,usuario.apellido,area,calificado FROM profesor INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
        
         if(!profesores.length){
             return res.status(200).send({error: 'No existen profesores'});
