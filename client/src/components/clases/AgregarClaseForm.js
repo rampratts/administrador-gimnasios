@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 import Spinner from '../utils/Spinner';
 import UserRequests from "../../api/UserRequests";
+import ClasesRequests from "../../api/ClasesRequests";
 
 const AgregarClaseForm = () => {
     const [isLoading, setIsloading] = useState(false);
@@ -25,8 +26,13 @@ const AgregarClaseForm = () => {
 
     const getProfesores = async () => {
         setIsloading(true);
-        const res = await UserRequests.profesores();
-        setProfesores(res);
+        try {
+            const res = await UserRequests.profesores();
+            setProfesores(res.data);
+        } catch (error) {
+            
+        }
+
         setIsloading(false);
     }
 
@@ -35,14 +41,17 @@ const AgregarClaseForm = () => {
     },[])
 
     const onSubmit = async data => {
-        console.log(data);
-        
         setIsloading(true);
-        setTimeout(() => {
+        try {
+            await ClasesRequests.registrarClase(data);
             setSuccess(true);
-            setAlertOpen(true);
-            setIsloading(false);
-        }, 2000)
+        } catch (error) {
+            setError(true);
+            setErrorMessage('Ha ocurrido un error. Por favor vuelve a intentarlo en unos minutos.');
+        }
+        
+        setAlertOpen(true);
+        setIsloading(false);
     }
 
     return (

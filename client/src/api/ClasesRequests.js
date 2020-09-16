@@ -5,6 +5,10 @@ class ClasesRequests {
         return await instance.get('clases/');
     }
 
+    static async registrarClase(clase) {
+        return await instance.post('clases/', clase);
+    }
+
     static async registrarUsuarioEnClase(claseId) {
         return instance.post('clases/registrar-usuario', {claseId});
     }
