@@ -1,17 +1,12 @@
 import instance from './axios.instance';
 
-//Esta clase ahora mismo cuenta con valores hardcodeados. La idea es cambiarlos por llamadas al backend cuando esten listas las rutas
 class ClasesRequests {
     static async getClases() {
         return await instance.get('clases/');
     }
 
-    static registrarUsuarioEnClase() {
-        return new Promise((resolve, reject) => {
-            setTimeout(function() {
-                resolve('Registrado')
-            }, 500);
-        })
+    static async registrarUsuarioEnClase(claseId) {
+        return instance.post('clases/registrar-usuario', {claseId});
     }
 
     static async clasesDeUsuario(idUsuario) {

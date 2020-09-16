@@ -21,7 +21,7 @@ const ListaClases = () => {
       setClases(res.data);
 
       clasesDeUsuarioRes.data.forEach(clase => {
-        setClasesDeUsuario([...clasesDeUsuario, clase.id])
+        setClasesDeUsuario(oldClases => [...oldClases, clase.id])
       });
     } catch (error) {
       

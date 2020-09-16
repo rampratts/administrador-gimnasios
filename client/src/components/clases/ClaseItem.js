@@ -19,10 +19,14 @@ const ClaseItem = ({clase, registrado}) => {
     const [userInfo, setUserInfo] = useContext(UserContext);
     const registrar = async () => {
         setIsLoading(true);
-        await ClasesRequests.registrarUsuarioEnClase();
-        setMostrarAlert(true);
-        setRegistradoConExito(true);
+        try {
+            await ClasesRequests.registrarUsuarioEnClase(clase.id);
+            setRegistradoConExito(true);
+        } catch (error) {
+            setRegistradoConExito(false);
+        }
         setIsLoading(false);
+        setMostrarAlert(true);
     }
 
     return (
