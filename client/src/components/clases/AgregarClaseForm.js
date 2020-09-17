@@ -28,9 +28,12 @@ const AgregarClaseForm = () => {
         setIsloading(true);
         try {
             const res = await UserRequests.profesores();
-            setProfesores(res.data);
+            if(!res.data.error){
+                setProfesores(res.data);
+            }
         } catch (error) {
-            
+            setError(true);
+            setErrorMessage('Ha ocurrido un error. Por favor vuelve a intentarlo en unos minutos.');
         }
 
         setIsloading(false);

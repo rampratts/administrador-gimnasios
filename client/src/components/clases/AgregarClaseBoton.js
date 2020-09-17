@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 
 import{
-Button,
+Button
 } from "shards-react";
 import { NavLink } from "react-router-dom";
 
 
 import { UserContext } from '../../context/UserContext';
 
-const AgregarClaseBoton = ({history}) => {
-    const [userInfo, setUserInfo] = useContext(UserContext);
+const AgregarClaseBoton = () => {
+    const [userInfo] = useContext(UserContext);
 
     if(userInfo.tipo_usuario === 'admin' || userInfo.tipo_usuario === 'prof') {
         return (
