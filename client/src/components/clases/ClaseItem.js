@@ -16,7 +16,7 @@ const ClaseItem = ({clase, registrado}) => {
     const [mostrarAlert, setMostrarAlert] = useState(false);
     const [registradoConExito, setRegistradoConExito] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [userInfo, setUserInfo] = useContext(UserContext);
+    const [userInfo] = useContext(UserContext);
     const registrar = async () => {
         setIsLoading(true);
         try {
