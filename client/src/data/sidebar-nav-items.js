@@ -7,6 +7,12 @@ export function getSidebarNavItems() {
       hasAccess: ['admin', 'prof', 'cliente']
     },
     {
+      title: "Clases",
+      htmlBefore: '<i class="material-icons">school</i>',
+      to: "/clases",
+      hasAccess: ['admin', 'prof', 'cliente']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",

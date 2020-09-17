@@ -49,6 +49,7 @@ const BajaUsuario = ({history}) => {
     } catch (error) {
       setErrorMessage('Ha ocurrido un error. Por favor inténtalo de nuevo.');
       setError(true);
+      setIsloading(false)
     }
   }
 
@@ -65,7 +66,7 @@ const BajaUsuario = ({history}) => {
             <ModalHeader>Confirma que quieres darte de baja.</ModalHeader>
             <ModalBody>
               {isLoading ?  <Spinner /> : <React.Fragment/>}
-              <p>Para finalmente darte de baja en el sistema, debemos asegurarnos de que eres tú. Por favor indica tu nombre de usuario y contraseña para continuar con el proceso.</p> 
+              <p>Para finalmente darte de baja en el sistema, debemos asegurarnos de que eres tú. Por favor indica tu nombre de usuario y contraseña para continuar con el proceso.</p>
               <Row>
               <Col>
                 <Form onSubmit={handleSubmit(onSubmit)}>

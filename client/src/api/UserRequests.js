@@ -20,6 +20,10 @@ class UserRequests {
     static async eliminarUsuario() {
         return await request.delete('users/');
     }
+
+    static async profesores() {
+        return await request.get('users/profesores');
+    }
 }
 
 export default UserRequests;

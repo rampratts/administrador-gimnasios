@@ -8,6 +8,8 @@ import { DefaultLayout } from "./layouts";
 import UserProfileLite from "./views/UserProfileLite";
 import Inicio from "./views/Inicio";
 import RegistrarUsuario from "./views/RegistrarUsuario";
+import Clases from "./views/Clases";
+import AgregarClase from "./views/AgregarClase";
 
 export default [
   {
@@ -34,5 +36,17 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['admin'],
     component: RegistrarUsuario
+  },
+  {
+    path: "/clases",
+    layout: DefaultLayout,
+    hasAccess: ['admin', 'prof', 'cliente'],
+    component: Clases
+  },
+  {
+    path: "/agregar-clase",
+    layout: DefaultLayout,
+    hasAccess: ['admin', 'prof'],
+    component: AgregarClase
   }
 ];
