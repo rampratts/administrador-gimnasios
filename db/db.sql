@@ -64,3 +64,11 @@ CREATE TABLE cliente_clases (
 	cliente_id UUID REFERENCES usuario(id) NOT NULL,
 	clases_id UUID REFERENCES clases(id) NOT NULL
 );
+
+CREATE TABLE pago (
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	estado_pago boolean NOT NULL,
+	fecha_pago DATE,
+	cliente_id UUID REFERENCES cliente(id) NOT NULL,
+	cantidad DECIMAL(50) NOT NULL
+);
