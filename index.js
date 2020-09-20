@@ -17,6 +17,9 @@ app.use('/api/users', require('./routes/users'));
 
 app.use('/api/clases', require('./routes/clases'));
 
+app.use('/api/pagos', require('./routes/pagos'));
+
+
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
