@@ -19,6 +19,18 @@ export function getSidebarNavItems() {
       hasAccess: ['admin']
     },
     {
+      title: "Pagos",
+      htmlBefore: '<i class="material-icons">payment</i>',
+      to: "/pagos",
+      hasAccess: ['admin']
+    },
+    {
+      title: "Mis Pagos",
+      htmlBefore: '<i class="material-icons">payment</i>',
+      to: "/mis-pagos",
+      hasAccess: ['cliente']
+    },
+    {
       title: "Mi Perfil",
       htmlBefore: '<i class="material-icons">person</i>',
       to: "/mi-perfil",

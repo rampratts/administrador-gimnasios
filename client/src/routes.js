@@ -10,6 +10,8 @@ import Inicio from "./views/Inicio";
 import RegistrarUsuario from "./views/RegistrarUsuario";
 import Clases from "./views/Clases";
 import AgregarClase from "./views/AgregarClase";
+import Pagos from "./views/Pagos";
+import MisPagos from "./views/MisPagos";
 
 export default [
   {
@@ -48,5 +50,17 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['admin', 'prof'],
     component: AgregarClase
+  },
+  {
+    path: "/pagos",
+    layout: DefaultLayout,
+    hasAccess: ['admin'],
+    component: Pagos
+  },
+  {
+    path: "/mis-pagos",
+    layout: DefaultLayout,
+    hasAccess: ['cliente'],
+    component: MisPagos
   }
 ];
