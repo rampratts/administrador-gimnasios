@@ -154,7 +154,7 @@ router.get('/profesores', Auth.isAuth, async(req,res) => {
     }
 })
 
-router.get('/clientes', Auth.isAuth, async(req,res)=>{
+router.get('/clientes', Auth.isAuth, Auth.isProfOrAdmin, async(req,res)=>{
     try {
         const {gimnasio_id} = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
         const clientes = (await pool.query('SELECT cliente.id, usuario.nombre, usuario.apellido, pago_mensual, deuda FROM cliente INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
