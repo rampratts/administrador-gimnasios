@@ -12,7 +12,7 @@ router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
    
     try {
         const pagoid=uuidv4();
-        await pool.query("INSERT INTO pagos VALUES($200, $300, $400, $500, $600 )", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);            
+        await pool.query("INSERT INTO pago VALUES($1, $2, $3, $4, $5, $6, $7 )", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);            
         res.send({
             status: "OK",
             statusCode: 200,
@@ -26,13 +26,15 @@ router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
 router.get('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
     try{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const pagos = (await pool.query('SELECT pagos.id,pagos.estado_pago,fecha_pago, usuario.nombre AS nombre_cliente FROM pagos INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
-        if(!pagos.length){
+        const pago = (await pool.query('SELECT pago.id,pago.estado_pago,fecha_pago, usuario.nombre AS nombre_cliente FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
+        if(!pago.length){
            return res.status(200).send({error: 'No hay pagos registrados',});
         }
-        res.send(pagos);
+        res.send(pago);
     } catch (error) {
         res.status(400).send(error);
     }
 
 })
+
+module.exports = router;
