@@ -28,7 +28,7 @@ router.get('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
         const pago = (await pool.query('SELECT pago.id,pago.estado_pago,fecha_pago, usuario.nombre AS nombre_cliente FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
         if(!pago.length){
-           return res.status(200).send({error: 'No hay pagos registrados',});
+           return res.status(200).send({error: 'No hay pagos registrados'});
         }
         res.send(pago);
     } catch (error) {
