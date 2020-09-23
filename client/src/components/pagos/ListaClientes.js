@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, FormInput } from "shards-react";
+import { Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import UserRequests from '../../api/UserRequests';
 import ClienteItem from './ClienteItem';
 
-
-const ListaClientes = ({id}) => {
+const ListaClientes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [clientes, setClientes] = useState([]);
-  const [clientesFiltrados, setClientesFiltrados] = useState([]);
-  const [filtro, setFiltro] = useState('');
 
   const getClientes = async () => {
     setIsLoading(true);
@@ -18,9 +15,8 @@ const ListaClientes = ({id}) => {
         setClientes(res.data);
       }
     } catch (error) {
-      
+      console.log(error)
     }
-
     setIsLoading(false);
   }
 

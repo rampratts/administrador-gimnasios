@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
+import { Button } from "shards-react";
 
 
 const PagoItem = ({pago, numero}) => {

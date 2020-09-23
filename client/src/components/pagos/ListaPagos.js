@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Card, CardHeader, CardBody, Button } from "shards-react";
-import UserRequests from '../../api/UserRequests';
-import ClienteItem from './ClienteItem';
+import {  Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import PagoItem from './PagoItem';
 
 
@@ -23,7 +21,7 @@ const ListaPagos = ({id}) => {
             cantidad: 29.99,
         }]);
     } catch (error) {
-      
+
     }
 
     setIsLoading(false);

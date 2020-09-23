@@ -13,12 +13,6 @@ export function getSidebarNavItems() {
       hasAccess: ['admin', 'prof', 'cliente']
     },
     {
-      title: "Agregar Usuario",
-      htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
-      to: "/agregar-usuario",
-      hasAccess: ['admin']
-    },
-    {
       title: "Pagos",
       htmlBefore: '<i class="material-icons">payment</i>',
       to: "/pagos",
@@ -29,6 +23,12 @@ export function getSidebarNavItems() {
       htmlBefore: '<i class="material-icons">payment</i>',
       to: "/mis-pagos",
       hasAccess: ['cliente']
+    },
+    {
+      title: "Agregar Usuario",
+      htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
+      to: "/agregar-usuario",
+      hasAccess: ['admin']
     },
     {
       title: "Mi Perfil",
