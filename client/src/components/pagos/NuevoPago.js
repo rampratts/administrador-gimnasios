@@ -8,7 +8,7 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, errors} = useForm({
     defaultValues: {
-      monto: cliente.pago_mensual
+      cantidad: cliente.pago_mensual
     }
   });
 
