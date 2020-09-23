@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, FormInput, Row, Form, Modal, ModalHeader, ModalBody } from "shards-react";
 import Spinner from '../utils/Spinner';
 import { useForm } from 'react-hook-form';
+import PagosRequests from '../../api/PagosRequests';
 
 const NuevoPago = ({isOpen, toggle, cliente}) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,8 +12,17 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
     }
   });
 
-  const onSubmit = data => {
+  const onSubmit = async data => {
     console.log(data);
+    const pago = {...data, cliente: cliente.id, estado_pago: false}
+    console.log(pago);
+
+    try {
+      const res = await PagosRequests.crearPago(pago);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -44,11 +54,11 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
                           id="monto"
                           placeholder="Monto"
                           type="number"
-                          name="monto"
+                          name="cantidad"
                           innerRef={register({required: 'Indique un monto' })}
-                          invalid={errors.monto}
+                          invalid={errors.cantidad}
                       />
-                      {errors.monto && <div class="invalid-feedback">{errors.monto.message}</div>}
+                      {errors.cantidad && <div class="invalid-feedback">{errors.cantidad.message}</div>}
                   </Col>
                   <Button className="float-right" type="submit">Agregar Pago</Button>
               </Form>

@@ -12,7 +12,7 @@ router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
    
     try {
         const pagoid=uuidv4();
-        await pool.query("INSERT INTO pago VALUES($1, $2, $3, $4, $5, $6, $7 )", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);            
+        await pool.query("INSERT INTO pago VALUES($1, $2, $3, $4, $5)", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);            
         res.send({
             status: "OK",
             statusCode: 200,
