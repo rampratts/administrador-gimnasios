@@ -11,6 +11,7 @@ import RegistrarUsuario from "./views/RegistrarUsuario";
 import Clases from "./views/Clases";
 import AgregarClase from "./views/AgregarClase";
 import Pagos from "./views/Pagos";
+import Pago from "./views/Pago";
 import MisPagos from "./views/MisPagos";
 
 export default [
@@ -56,6 +57,12 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['admin'],
     component: Pagos
+  },
+  {
+    path: "/pago",
+    layout: DefaultLayout,
+    hasAccess: ['admin'],
+    component: Pago
   },
   {
     path: "/mis-pagos",

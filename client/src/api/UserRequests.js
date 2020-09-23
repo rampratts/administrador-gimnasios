@@ -24,6 +24,10 @@ class UserRequests {
     static async profesores() {
         return await request.get('users/profesores');
     }
+
+    static async clientes() {
+        return await request.get('users/clientes');
+    }
 }
 
 export default UserRequests;
