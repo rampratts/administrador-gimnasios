@@ -9,6 +9,7 @@ const PagoItem = ({pago, numero}) => {
   const [buttonText, setButtonText] = useState('Marcar Pago');
   const [buttonTheme, setButtonTheme] = useState('primary');
   const [success, setSuccess] = useState(false);
+  const date = new Date(pago.fecha_pago);
 
   const marcarPago = async () => {
     setIsLoading(true);
@@ -29,7 +30,7 @@ const PagoItem = ({pago, numero}) => {
         <tr>
           <td>{numero}</td>
           <td>{pago.cantidad}</td>
-          <td>{pago.fecha_pago}</td>
+          <td>{date.getDay()}/{date.getMonth()}/{date.getFullYear()}</td>
           <td>{pago.estado_pago ? 'Pagado' : 'No Pagado'}</td>
           <td>{(pago.estado_pago || userInfo.tipo_usuario !== 'admin') ? <React.Fragment/>: <Button onClick={marcarPago} disabled={isLoading || success} theme={buttonTheme}>{buttonText}</Button>}</td>
         </tr>
