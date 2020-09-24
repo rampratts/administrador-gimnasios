@@ -13,7 +13,7 @@ router.post('/register',  Auth.isAuth, Auth.isAdmin,
     check('email').isEmail(),
     body('contrasena').isLength({ min: 6 }),
     async (req, res) => {
-        const errors = validationResult(req);  //verificar si los campos pasados por el body son correctos  
+        const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
@@ -21,7 +21,7 @@ router.post('/register',  Auth.isAuth, Auth.isAdmin,
         const { nombre, nombre_usuario, apellido, email, contrasena, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario } = req.body;
     
         try {
-            const salt = await bcrypt.genSalt(10); //parte del encriptado del password
+            const salt = await bcrypt.genSalt(10); 
             const hashedPassword = await bcrypt.hash(contrasena, salt);
             const userId = uuidv4();
             const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
