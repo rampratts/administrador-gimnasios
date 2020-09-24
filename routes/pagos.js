@@ -37,4 +37,15 @@ router.get('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
 
 })
 
+router.get('/mis-pagos', Auth.isAuth, Auth.isClient, async (req, res) => {
+    const id = req.query.id ? req.query.id : req.user.id;
+
+    try {
+        const pago = (await pool.query('SELECT pago.id, pago.estado_pago, pago.fecha_pago, pago.cantidad FROM CLIENTE_PAGO INNER JOIN pagos ON pago_id = pagos.id WHERE cliente_id = $1', [id])).rows;
+        res.send(pago)
+    } catch (error) {
+        res.status(400).send(error);
+    }
+})
+
 module.exports = router;
