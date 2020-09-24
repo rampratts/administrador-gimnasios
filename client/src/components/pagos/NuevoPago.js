@@ -65,7 +65,7 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
                   </Col>
                   <Alert theme={success ? 'success' : 'danger'} dismissible={() => setAlertOpen(false)} open={alertOpen}>
                     {success ?
-                        <span>La clase fue creada correctamente.</span>
+                        <span>El pago fue creado correctamente.</span>
                         :
                         <span>Ha ocurrido un error. Por favor vuelve a intentarlo.</span>
                     }
