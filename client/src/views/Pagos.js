@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import ListaPagos from "../components/pagos/ListaPagos";
+import ListaClientes from "../components/pagos/ListaClientes";
 
 const Pagos = () => (
   <Container fluid className="main-content-container px-4">
@@ -11,7 +11,7 @@ const Pagos = () => (
     </Row>
     <Row>
         <Col lg="9">
-          <ListaPagos/>
+          <ListaClientes/>
         </Col>
     </Row>
   </Container>

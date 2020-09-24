@@ -2,12 +2,12 @@ import React from "react";
 import { Container, Row, Col } from "shards-react";
 
 import PageTitle from "../components/common/PageTitle";
-import ListaPagos from "../components/pagos/ListaPagos";
+import ListaPagos from '../components/pagos/ListaPagos';
 
-const MisPagos = () => (
+const Pagos = () => (
   <Container fluid className="main-content-container px-4">
     <Row noGutters className="page-header py-4">
-      <PageTitle title="Pagos" md="12" className="ml-sm-auto mr-sm-auto" />
+      <PageTitle title="Pagos de Cliente" md="12" className="ml-sm-auto mr-sm-auto" />
     </Row>
     <Row>
         <Col lg="9">
@@ -17,4 +17,4 @@ const MisPagos = () => (
   </Container>
 );
 
-export default MisPagos;
+export default Pagos;
