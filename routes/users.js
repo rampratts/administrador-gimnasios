@@ -13,15 +13,15 @@ router.post('/register',  Auth.isAuth, Auth.isAdmin,
     check('email').isEmail(),
     body('contrasena').isLength({ min: 6 }),
     async (req, res) => {
-        const errors = validationResult(req);
+        const errors = validationResult(req);  //verificar si los campos pasados por el body son correctos  
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
 
         const { nombre, nombre_usuario, apellido, email, contrasena, fecha_nacimiento, documento_identidad, telefono, fecha_inicio, tipo_usuario } = req.body;
-
+    
         try {
-            const salt = await bcrypt.genSalt(10);
+            const salt = await bcrypt.genSalt(10); //parte del encriptado del password
             const hashedPassword = await bcrypt.hash(contrasena, salt);
             const userId = uuidv4();
             const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
@@ -150,19 +150,6 @@ router.get('/profesores', Auth.isAuth, async(req,res) => {
         }
           res.send(profesores);
     } catch(error){
-        res.status(400).send(error);
-    }
-})
-
-router.get('/clientes', Auth.isAuth, Auth.isProfOrAdmin, async(req,res)=>{
-    try {
-        const {gimnasio_id} = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const clientes = (await pool.query('SELECT cliente.id, usuario.nombre, usuario.apellido, pago_mensual, deuda FROM cliente INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
-        if(!clientes.length){
-            return res.status(200).send({error:'No existen clientes'});
-        }
-        res.send(clientes);
-    }catch(error){
         res.status(400).send(error);
     }
 })
