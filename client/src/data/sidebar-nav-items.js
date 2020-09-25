@@ -13,6 +13,18 @@ export function getSidebarNavItems() {
       hasAccess: ['admin', 'prof', 'cliente']
     },
     {
+      title: "Pagos",
+      htmlBefore: '<i class="material-icons">payment</i>',
+      to: "/pagos",
+      hasAccess: ['admin']
+    },
+    {
+      title: "Mis Pagos",
+      htmlBefore: '<i class="material-icons">payment</i>',
+      to: "/mis-pagos",
+      hasAccess: ['cliente']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",
