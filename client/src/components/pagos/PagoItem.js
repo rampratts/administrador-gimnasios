@@ -14,7 +14,7 @@ const PagoItem = ({pago, numero}) => {
   const marcarPago = async () => {
     setIsLoading(true);
     try {
-      await PagosRequests.marcarPago();
+      await PagosRequests.marcarPago(pago.id);
       setButtonText('Pagado con exito.');
       setButtonTheme('success');
       setSuccess(true);

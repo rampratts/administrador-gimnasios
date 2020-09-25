@@ -19,7 +19,7 @@ const ListaPagos = ({location}) => {
         if(!userId){
           res = await PagosRequests.misPagos();
         } else {
-          res = await PagosRequests.obtenerPagos();
+          res = await PagosRequests.obtenerPagos(userId);
         }
         setPagos(res.data);
         setPagosFiltrados(res.data);
