@@ -15,13 +15,14 @@ const ListaPagos = ({location}) => {
     setIsLoading(true);
     const userId = new URLSearchParams(window.location.search).get('id');
     try {
+      let res;
         if(!userId){
-          //TODO
-          console.log('traer MIS pagos');
+          res = await PagosRequests.misPagos();
+        } else {
+          res = await PagosRequests.obtenerPagos(userId);
         }
-        const res = await PagosRequests.obtenerPagos();
-        setPagos(res);
-        setPagosFiltrados(res);
+        setPagos(res.data);
+        setPagosFiltrados(res.data);
     } catch (error) {
 
     }
@@ -35,7 +36,7 @@ const ListaPagos = ({location}) => {
 
   useEffect(() => {
     if(filtro === 'todos') {
-      setPagosFiltrados(pagos); 
+      setPagosFiltrados(pagos);
     } else if(filtro === 'pagados') {
       setPagosFiltrados(pagos.filter(pago => pago.estado_pago === true));
     } else if(filtro === 'no-pagados') {

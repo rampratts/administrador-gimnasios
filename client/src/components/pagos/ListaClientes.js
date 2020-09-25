@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, CardHeader, CardBody } from "shards-react";
 import UserRequests from '../../api/UserRequests';
+import Spinner from '../utils/Spinner';
 import ClienteItem from './ClienteItem';
 
 const ListaClientes = () => {
@@ -32,6 +33,7 @@ const ListaClientes = () => {
             <h6 className="m-0">Clientes</h6>
           </CardHeader>
           <CardBody className="p-0 pb-3">
+            {isLoading ?  <Spinner/> : <React.Fragment/>}
             <table className="table mb-0">
               <thead className="bg-light">
                 <tr>

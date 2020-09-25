@@ -5,29 +5,16 @@ class PagosRequests {
         return await instance.post('pagos/', pago);
     }
 
-    static async obtenerPagos() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve([{
-                    estado_pago: false,
-                    fecha_pago: '10-12-2020',
-                    cantidad: 29.99,
-                },
-                {
-                    estado_pago: true,
-                    fecha_pago: '10-11-2020',
-                    cantidad: 29.99,
-                }])
-            }, 500)
-        });
+    static async obtenerPagos(id) {
+        return await instance.get(`pagos/${id}`);
     }
-    
-    static async marcarPago() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(true)
-             }, 1000);
-        })
+
+    static async misPagos() {
+      return await instance.get('pagos/mis-pagos');
+    }
+
+    static async marcarPago(pago_id) {
+        return await instance.patch('pagos/marcar-pago', {pago_id});
     }
 }
 
