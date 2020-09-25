@@ -31,7 +31,7 @@ const PagoItem = ({pago, numero}) => {
           <td>{numero}</td>
           <td>${pago.cantidad}</td>
           <td>{date.getUTCDate()}/{date.getUTCMonth() + 1}/{date.getFullYear()}</td>
-          <td>{pago.estado_pago ? 'Pagado' : 'No Pagado'}</td>
+          <td>{pago.estado_pago ? <span className="text-success">Pagado</span> : <span className="text-danger">No pagado</span>}</td>
           <td>{(pago.estado_pago || userInfo.tipo_usuario !== 'admin') ? <React.Fragment/>: <Button onClick={marcarPago} disabled={isLoading || success} theme={buttonTheme}>{buttonText}</Button>}</td>
         </tr>
   );
