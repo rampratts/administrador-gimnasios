@@ -16,7 +16,7 @@ const ClienteItem = ({cliente, numero}) => {
           <td>{numero}</td>
           <td>{cliente.nombre}</td>
           <td>{cliente.apellido}</td>
-          <td>{cliente.deuda ? cliente.deuda : 'Al dia'}</td>
+          <td>{cliente.deuda ? '$'+cliente.deuda : 'Al dia'}</td>
           <td>{cliente.pago_mensual}</td>
           <td>
               <NavLink to={`/pago?id=${cliente.id}`}>

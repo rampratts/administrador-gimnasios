@@ -11,7 +11,8 @@ router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
    
     try {
         const pagoid=uuidv4();
-        await pool.query("INSERT INTO pago VALUES($1, $2, $3, $4, $5)", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);            
+        await pool.query("INSERT INTO pago VALUES($1, $2, $3, $4, $5)", [pagoid,estado_pago,fecha_pago,cliente,cantidad]);
+        await pool.query('UPDATE cliente SET deuda = (SELECT SUM(cantidad) FROM pago INNER JOIN cliente ON cliente_id = cliente.id WHERE cliente.id = $1 AND estado_pago = false)WHERE cliente.id = $1', [cliente])            
         res.send({
             status: "OK",
             statusCode: 200,
@@ -37,7 +38,7 @@ router.get('/:id', Auth.isAuth, Auth.isAdmin, async (req,res)=>{
     const id = req.params.id;
 
     try {
-        const pagoscliente = (await pool.query('SELECT pago.id, pago.estado_pago, pago.fecha_pago, pago.cantidad, usuario.nombre, usuario.apellido FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE cliente.id = $1', [id])).rows;
+        const pagoscliente = (await pool.query('SELECT pago.id, pago.estado_pago, pago.fecha_pago, pago.cantidad, usuario.nombre, usuario.apellido FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE cliente.id = $1 ORDER by fecha_pago DESC', [id])).rows;
         res.send(pagoscliente)
     } catch (error) {
         res.status(400).send(error);
@@ -46,7 +47,10 @@ router.get('/:id', Auth.isAuth, Auth.isAdmin, async (req,res)=>{
 router.patch('/marcar-pago', Auth.isAuth, Auth.isAdmin, async (req,res) => {
     const { pago_id } = req.body;
     try{
+        const { cliente_id } = (await pool.query('SELECT cliente_id FROM pago WHERE pago.id = $1', [pago_id])).rows[0];
+        console.log(cliente_id)
         await pool.query('UPDATE pago SET estado_pago = true WHERE pago.id = $1', [pago_id]);
+        await pool.query('UPDATE cliente SET deuda = (SELECT SUM(cantidad) FROM pago INNER JOIN cliente ON cliente_id = cliente.id WHERE cliente.id = $1 AND estado_pago = false)WHERE cliente.id = $1', [cliente_id]);            
         res.send({
             statusCode: 200,
             status: "OK",
