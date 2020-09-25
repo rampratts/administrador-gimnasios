@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require('uuid');
 const { check, body, validationResult } = require('express-validator');
 const pool = require('../db/db');
 const Auth = require('../middleware/authentication');
-module.exports = router;
 
 router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
     
@@ -23,20 +22,6 @@ router.post('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
     }
 })
 
-router.get('/', Auth.isAuth, Auth.isAdmin, async(req,res)=>{
-    try{
-        const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const pago = (await pool.query('SELECT pago.id,pago.estado_pago,fecha_pago, usuario.nombre AS nombre_cliente FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
-        if(!pago.length){
-           return res.status(200).send({error: 'No hay pagos registrados'});
-        }
-        res.send(pago);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-
-})
-
 router.get('/mis-pagos', Auth.isAuth, Auth.isClient, async (req, res) => {
     const id = req.user.id;
 
@@ -48,24 +33,25 @@ router.get('/mis-pagos', Auth.isAuth, Auth.isClient, async (req, res) => {
     }
 })
 
-router.get('/id-de-cliente', Auth.isAuth, Auth.isAdmin, async (req,res)=>{
-    const id = req.query.id ? req.query.id : req.user.id;
+router.get('/:id', Auth.isAuth, Auth.isAdmin, async (req,res)=>{
+    const id = req.params.id;
 
     try {
-        const pagoscliente = (await pool.query('SELECT pago.id, pago.estado_pago, pago.fecha_pago, pago.cantidad, usuario.nombre AS nombre_cliente FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE usuario.id = $1', [id])).rows;
+        const pagoscliente = (await pool.query('SELECT pago.id, pago.estado_pago, pago.fecha_pago, pago.cantidad, usuario.nombre, usuario.apellido FROM pago INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE cliente.id = $1', [id])).rows;
         res.send(pagoscliente)
     } catch (error) {
         res.status(400).send(error);
     }
 })
-router.post('/marcar-pago', Auth.isAuth, Auth.isAdmin, async (req,res) => {
+router.patch('/marcar-pago', Auth.isAuth, Auth.isAdmin, async (req,res) => {
     const { pago_id } = req.body;
     try{
-        const pago = (await pool.query('UPDATE pago SET estado_pago = true WHERE [pago.id] = $1', [pago_id])).rows;
-        if(!pago.length){
-           return res.status(200).send({error: 'No hay pagos registrados'});
-        }
-        res.send(pago);
+        await pool.query('UPDATE pago SET estado_pago = true WHERE pago.id = $1', [pago_id]);
+        res.send({
+            statusCode: 200,
+            status: "OK",
+            results: "Pago marcado con exito"
+        });
     } catch (error) {
         res.status(400).send(error);
     }
