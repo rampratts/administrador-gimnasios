@@ -39,7 +39,7 @@ CREATE TABLE administrativo (
 CREATE TABLE cliente (
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
 	pago_mensual decimal NOT NULL,
-  	deuda decimal,p
+  	deuda decimal,
   	peso_actual decimal,
   	imc decimal,
   	usuario_id UUID REFERENCES usuario(id) NOT NULL 
