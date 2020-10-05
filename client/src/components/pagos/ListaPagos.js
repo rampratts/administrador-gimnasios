@@ -11,7 +11,7 @@ const ListaPagos = ({location}) => {
   const [filtro, setFiltro] = useState('todos');
   const [pagosFiltrados, setPagosFiltrados] = useState([]);
 
-  const getClientes = async () => {
+  const getPagos = async () => {
     setIsLoading(true);
     const userId = new URLSearchParams(window.location.search).get('id');
     try {
@@ -31,7 +31,7 @@ const ListaPagos = ({location}) => {
   }
 
   useEffect(() => {
-    getClientes();
+    getPagos();
   }, []);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const ListaPagos = ({location}) => {
                 </tr>
               </thead>
               <tbody>
-                {pagosFiltrados.map((pago, index) => <PagoItem pago={pago} numero={index + 1} key={index}/>)}
+                {pagosFiltrados.map((pago, index) => <PagoItem pago={pago} getPagos={getPagos} numero={index + 1} key={index}/>)}
               </tbody>
             </table>
           </CardBody>

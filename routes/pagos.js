@@ -48,7 +48,6 @@ router.patch('/marcar-pago', Auth.isAuth, Auth.isAdmin, async (req,res) => {
     const { pago_id } = req.body;
     try{
         const { cliente_id } = (await pool.query('SELECT cliente_id FROM pago WHERE pago.id = $1', [pago_id])).rows[0];
-        console.log(cliente_id)
         await pool.query('UPDATE pago SET estado_pago = true WHERE pago.id = $1', [pago_id]);
         await pool.query('UPDATE cliente SET deuda = (SELECT SUM(cantidad) FROM pago INNER JOIN cliente ON cliente_id = cliente.id WHERE cliente.id = $1 AND estado_pago = false)WHERE cliente.id = $1', [cliente_id]);            
         res.send({

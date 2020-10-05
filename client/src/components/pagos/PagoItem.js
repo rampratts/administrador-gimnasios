@@ -3,7 +3,7 @@ import { Button } from "shards-react";
 import PagosRequests from '../../api/PagosRequests';
 import { UserContext } from '../../context/UserContext';
 
-const PagoItem = ({pago, numero}) => {
+const PagoItem = ({pago, getPagos,numero}) => {
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [buttonText, setButtonText] = useState('Marcar Pago');
@@ -18,12 +18,14 @@ const PagoItem = ({pago, numero}) => {
       setButtonText('Pagado con exito.');
       setButtonTheme('success');
       setSuccess(true);
+
     } catch (error) {
       setButtonText('Error. Volver a intentar');
       setButtonTheme('danger');
       setSuccess(false);
     }
     setIsLoading(false)
+    getPagos();
   }
 
   return (

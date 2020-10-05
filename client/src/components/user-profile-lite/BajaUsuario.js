@@ -37,7 +37,6 @@ const BajaUsuario = ({history}) => {
     try {
       const res = await UserRequests.login(data.nombre_usuario, data.contrasena);
       if(res.data.error) {
-        console.log('invalido')
         setErrorMessage('Credenciales inválidas');
         setError(true);
         setIsloading(false)

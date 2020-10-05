@@ -38,12 +38,11 @@ const AgregarUsuarioForm = () => {
     }
 
     const onSubmit = async (contrasena) => {
-        setIsloading(true); 
+        setIsloading(true);
         const newUserData = {...formData, contrasena};
 
         try {
-            const res = await request.post('users/register', newUserData);
-            console.log(res);
+            await request.post('users/register', newUserData);
             setSuccess(true);
         } catch (error) {
             setSuccess(false);
@@ -53,7 +52,7 @@ const AgregarUsuarioForm = () => {
         setFormData({});
         setContrasenaStep(false);
         setAlertOpen(true);
-        setIsloading(false); 
+        setIsloading(false);
     }
 
     const dismiss = () => {
@@ -72,7 +71,7 @@ const AgregarUsuarioForm = () => {
         <Card small className="mb-4 pt-3">
           {
               isLoading ? <Spinner /> : <React.Fragment/>
-          }  
+          }
           {
             !contrasenaStep ?
             <DatosIniciales setData={saveData}/>

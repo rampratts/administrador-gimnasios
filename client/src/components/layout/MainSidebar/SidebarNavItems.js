@@ -37,7 +37,6 @@ class SidebarNavItems extends React.Component {
 
   render() {
     const { navItems: items } = this.state;
-    console.log(items)
     return (
       <div className="nav-wrapper">
         <Nav className="nav--no-borders flex-column">
