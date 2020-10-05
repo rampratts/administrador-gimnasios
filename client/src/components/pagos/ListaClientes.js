@@ -18,7 +18,6 @@ const ListaClientes = () => {
         setClientes(res.data);
       }
     } catch (error) {
-      console.log(error)
     }
     setIsLoading(false);
   }
