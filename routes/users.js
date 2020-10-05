@@ -111,6 +111,8 @@ router.delete('/', Auth.isAuth, async (req, res) => {
                 await pool.query('DELETE FROM clases WHERE profesor_id = $1', [req.user.id]);
                 break
             case 'cliente':
+                const { id } = (await pool.query('SELECT id FROM cliente WHERE usuario_id = $1', [req.user.id])).rows[0];
+                await pool.query('DELETE FROM pago WHERE cliente_id = $1', [id]);
                 await pool.query('DELETE FROM cliente WHERE usuario_id = $1', [req.user.id]);
                 await pool.query('DELETE FROM cliente_clases WHERE cliente_id = $1', [req.user.id]);
                 break

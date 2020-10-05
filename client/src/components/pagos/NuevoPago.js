@@ -5,8 +5,6 @@ import PagosRequests from '../../api/PagosRequests';
 
 const NuevoPago = ({isOpen, toggle, cliente}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [alertOpen, setAlertOpen] = useState(false);
   const { register, handleSubmit, errors} = useForm({
     defaultValues: {
       cantidad: cliente.pago_mensual
@@ -19,12 +17,10 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
 
     try {
       await PagosRequests.crearPago(pago);
-      setSuccess(true);
+      toggle(true);
     } catch (error) {
-      console.log(error);
-      setSuccess(false);
+      toggle(false);
     }
-    setAlertOpen(true);
     setIsLoading(false);
   }
 
@@ -63,13 +59,6 @@ const NuevoPago = ({isOpen, toggle, cliente}) => {
                       />
                       {errors.cantidad && <div class="invalid-feedback">{errors.cantidad.message}</div>}
                   </Col>
-                  <Alert theme={success ? 'success' : 'danger'} dismissible={() => setAlertOpen(false)} open={alertOpen}>
-                    {success ?
-                        <span>El pago fue creado correctamente.</span>
-                        :
-                        <span>Ha ocurrido un error. Por favor vuelve a intentarlo.</span>
-                    }
-                  </Alert>
                   <Button className="float-right" disabled={isLoading} type="submit">Agregar Pago</Button>
               </Form>
             </Col>

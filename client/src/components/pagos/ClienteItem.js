@@ -4,10 +4,13 @@ import { NavLink } from "react-router-dom";
 import NuevoPago from './NuevoPago';
 
 
-const ClienteItem = ({cliente, numero}) => {
+const ClienteItem = ({cliente, numero, nuevoPago}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const toggle = () => setIsModalOpen(!isModalOpen);
+  const toggle = (isSuccess) => {
+    nuevoPago(isSuccess);
+    setIsModalOpen(!isModalOpen);
+  }
 
   return (
     <React.Fragment>
