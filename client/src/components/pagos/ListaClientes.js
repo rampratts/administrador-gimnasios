@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, CardHeader, CardBody } from "shards-react";
+import { Row, Col, Card, CardHeader, CardBody, Alert } from "shards-react";
 import UserRequests from '../../api/UserRequests';
 import Spinner from '../utils/Spinner';
 import ClienteItem from './ClienteItem';
@@ -7,6 +7,8 @@ import ClienteItem from './ClienteItem';
 const ListaClientes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [clientes, setClientes] = useState([]);
+  const [success, setSuccess] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const getClientes = async () => {
     setIsLoading(true);
@@ -21,6 +23,14 @@ const ListaClientes = () => {
     setIsLoading(false);
   }
 
+  const nuevoPago = (result) => {
+    if(typeof result === "boolean") {
+      setSuccess(result);
+      setAlertOpen(true);
+      getClientes();
+    }
+  }
+
   useEffect(() => {
     getClientes();
   }, []);
@@ -31,6 +41,13 @@ const ListaClientes = () => {
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
             <h6 className="m-0">Clientes</h6>
+            <Alert theme={success ? 'success' : 'danger'} dismissible={() => setAlertOpen(false)} open={alertOpen}>
+              {success ?
+                  <span>El pago fue creado correctamente.</span>
+                  :
+                  <span>Ha ocurrido un error. Por favor vuelve a intentarlo.</span>
+              }
+            </Alert>
           </CardHeader>
           <CardBody className="p-0 pb-3">
             {isLoading ?  <Spinner/> : <React.Fragment/>}
@@ -55,7 +72,7 @@ const ListaClientes = () => {
                 </tr>
               </thead>
               <tbody>
-                {clientes.map((cliente, index) => <ClienteItem cliente={cliente} numero={index + 1} key={index}/>)}
+                {clientes.map((cliente, index) => <ClienteItem cliente={cliente} nuevoPago={nuevoPago} numero={index + 1} key={index}/>)}
               </tbody>
             </table>
           </CardBody>
