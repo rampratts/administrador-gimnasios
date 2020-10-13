@@ -74,6 +74,19 @@ CREATE TABLE pago (
 	cantidad DECIMAL(50) NOT NULL
 );
 
+CREATE TABLE rutina (
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	descripcion VARCHAR NOT NULL,
+	frecuencia INTEGER,
+	duracion DATETIME,
+	profesor_id UUID REFERENCES profesor(id) NOT NULL
+);
+
+CREATE TABLE rutina_cliente(
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	cliente_id UUID REFERENCES cliente(id) NOT NULL
+);
+
 --VIEWS
 
 --Esta view devuelve todos los usuarios con informacion sobre su tipo
