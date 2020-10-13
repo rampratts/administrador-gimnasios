@@ -7,10 +7,11 @@ const Auth = require('../middleware/authentication');
 
 router.post('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
     const {descripcion, frecuencia, duracion} = req.body;
+    const { id } = (await pool.query('SELECT id FROM profesor WHERE usuario_id = $1', [req.user.id])).rows[0];
 
     try {
         const rutinaid=uuidv4();
-        await pool.query("INSERT INTO rutina VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [rutinaid,descripcion,frecuencia,duracion]);            
+        await pool.query("INSERT INTO rutina VALUES($1, $2, $3, $4, $5)", [rutinaid,descripcion,frecuencia,duracion,profesorid]);            
         res.send({
             status: "OK",
             statusCode: 200,
