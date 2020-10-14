@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, FormSelect } from "shards-react";
 import RutinasRequests from '../../api/RutinasRequests';
+import UserRequests from '../../api/UserRequests';
 import Spinner from '../utils/Spinner'
 import RutinasItem from './RutinasItem';
 
@@ -8,6 +9,7 @@ const ListaRutinas = ({location}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [rutinas, setRutinas] = useState([]);
   const [cliente, setCliente] = useState();
+  const [clientes, setClientes] = useState([]);
   const [listaSeleccionada, setListaSeleccionada] = useState('TODAS');
 
   const getRutinas = async () => {
@@ -22,7 +24,6 @@ const ListaRutinas = ({location}) => {
     setIsLoading(false);
   }
 
-  
   const getRutinaCliente = async () => {
     setIsLoading(true);
     try {
@@ -33,6 +34,15 @@ const ListaRutinas = ({location}) => {
     }
 
     setIsLoading(false);
+  }
+
+  const getClientes = async () => {
+    try {
+        const res = await UserRequests.clientes();
+        setClientes(res.data);
+    } catch (error) {
+
+    }
   }
 
   useEffect(() => {
@@ -47,7 +57,9 @@ const ListaRutinas = ({location}) => {
       }
   },[listaSeleccionada])
 
-
+  useEffect(() => {
+      getClientes();
+  }, []);
 
   return (
     <Row>
@@ -68,9 +80,7 @@ const ListaRutinas = ({location}) => {
             {listaSeleccionada === "CLIENTES" ? 
                 <FormSelect className="col-6 ml-3 mt-3" onChange={(e) => setCliente(e.target.value)}>
                     <option value="" selected disabled hidden>Seleccionar Cliente...</option>
-                    <option value="todos">Jose</option>
-                    <option value="pagados">Pedro</option>
-                    <option value="no-pagados">Maria</option>
+                    {clientes.map(cliente => <option value={cliente.id}>{cliente.nombre}</option>)}
                 </FormSelect>
                 :
                 <React.Fragment />
