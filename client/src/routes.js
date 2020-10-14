@@ -13,6 +13,7 @@ import AgregarClase from "./views/AgregarClase";
 import Pagos from "./views/Pagos";
 import Pago from "./views/Pago";
 import MisPagos from "./views/MisPagos";
+import Rutinas from "./views/Rutinas";
 
 export default [
   {
@@ -69,5 +70,11 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['cliente'],
     component: MisPagos
+  },
+  {
+    path: "/rutinas",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: Rutinas
   }
 ];
