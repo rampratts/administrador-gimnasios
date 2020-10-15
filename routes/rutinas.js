@@ -22,6 +22,17 @@ router.post('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
     }
 })
 
+router.get('/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
+    const id = req.params.id;
+
+    try {
+        const rutinacliente = (await pool.query('SELECT rutina.id, rutina.descripcion, rutina.frecuencia, rutina.duracion, usuario.nombre, usuario.apellido FROM rutina INNER JOIN cliente ON cliente_id = cliente.id INNER JOIN usuario ON usuario.id = cliente.usuario_id WHERE cliente.id = $1', [id])).rows;
+        res.send(rutinacliente)
+    } catch (error) {
+        res.status(400).send(error);
+    }
+})
+
 
 
 module.exports = router;
