@@ -1,8 +1,8 @@
 import instance from './axios.instance';
 
 class RutinasRequests {
-    static async crearRutina(pago) {
-        return await instance.post('rutina/', pago);
+    static async crearRutina(rutina) {
+        return await instance.post('rutinas/', rutina);
     }
 
     static async obtenerTodasRutinas() {

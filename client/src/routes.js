@@ -14,6 +14,7 @@ import Pagos from "./views/Pagos";
 import Pago from "./views/Pago";
 import MisPagos from "./views/MisPagos";
 import Rutinas from "./views/Rutinas";
+import AgregarRutina from "./views/AgregarRutina";
 
 export default [
   {
@@ -76,5 +77,11 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['prof'],
     component: Rutinas
+  },
+  {
+    path: "/agregar-rutina",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AgregarRutina
   }
 ];

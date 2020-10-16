@@ -24,7 +24,7 @@ export function getSidebarNavItems() {
       to: "/mis-pagos",
       hasAccess: ['cliente']
     },
-        {
+    {
       title: "Rutinas",
       htmlBefore: '<i class="material-icons">fitness_center</i>',
       to: "/rutinas",

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {  Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, FormSelect } from "shards-react";
+import { NavLink as RouterLink } from "react-router-dom";
+import {  Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, FormSelect, Button } from "shards-react";
 import RutinasRequests from '../../api/RutinasRequests';
 import UserRequests from '../../api/UserRequests';
 import Spinner from '../utils/Spinner'
@@ -66,6 +67,11 @@ const ListaRutinas = ({location}) => {
       <Col>
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
+             <RouterLink to="/agregar-rutina" className="float-right">
+                <Button>
+                    Agregar Rutina
+                </Button>
+            </RouterLink>
             <Nav tabs>
                 <NavItem>
                     <NavLink active={listaSeleccionada === 'TODAS' ? true : false} onClick={() => setListaSeleccionada('TODAS')} href="#">Todas las Rutinas</NavLink>
