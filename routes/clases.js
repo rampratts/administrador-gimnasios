@@ -29,7 +29,7 @@ router.get('/', Auth.isAuth, async(req,res)=>{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
         const clases = (await pool.query('SELECT clases.id,clases.nombre,descripcion,horario,lunes,martes,miercoles,jueves,viernes,sabado,domingo, usuario.nombre AS nombre_profesor FROM clases INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
         if(!clases.length){
-           return res.status(200).send({error: 'No hay clases disponibles',});
+           return res.status(200).send({error: 'No hay clases disponibles'});
         }
         res.send(clases);
     } catch (error) {
