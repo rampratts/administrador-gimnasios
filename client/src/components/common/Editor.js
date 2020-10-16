@@ -6,10 +6,12 @@ import { useForm } from 'react-hook-form';
 import "react-quill/dist/quill.snow.css";
 import "../../assets/quill.css";
 import RutinasRequests from "../../api/RutinasRequests";
+import Spinner from "../utils/Spinner";
 
 const Editor = () => {
     const [titulo, setTitulo] = useState('');
     const [text, setTexto] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const { register, handleSubmit, errors} = useForm(    {
         defaultValues: {
@@ -18,16 +20,19 @@ const Editor = () => {
     });
 
     const guardarRutina = async (data) => {
+        setIsLoading(true);
         try {
             await RutinasRequests.crearRutina({...data, descripcion: text});
         } catch (error) {
 
         }
+        setIsLoading(false);
     }
 
     return (
         <Card small className="mb-3">
             <CardBody>
+                {isLoading ? <Spinner /> : <React.Fragment />}
                 <Form className="add-new-post" onSubmit={handleSubmit(guardarRutina)}>
                     <FormInput 
                         size="lg"
