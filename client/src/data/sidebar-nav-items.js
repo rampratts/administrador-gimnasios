@@ -25,6 +25,12 @@ export function getSidebarNavItems() {
       hasAccess: ['cliente']
     },
     {
+      title: "Rutinas",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/rutinas",
+      hasAccess: ['prof']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",

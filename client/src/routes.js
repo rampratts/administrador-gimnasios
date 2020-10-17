@@ -13,6 +13,9 @@ import AgregarClase from "./views/AgregarClase";
 import Pagos from "./views/Pagos";
 import Pago from "./views/Pago";
 import MisPagos from "./views/MisPagos";
+import Rutinas from "./views/Rutinas";
+import AgregarRutina from "./views/AgregarRutina";
+import Rutina from "./views/Rutina";
 
 export default [
   {
@@ -69,5 +72,23 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['cliente'],
     component: MisPagos
+  },
+  {
+    path: "/rutinas",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: Rutinas
+  },
+  {
+    path: "/rutina",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: Rutina
+  },
+  {
+    path: "/agregar-rutina",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AgregarRutina
   }
 ];

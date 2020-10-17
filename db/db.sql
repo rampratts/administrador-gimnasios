@@ -76,6 +76,7 @@ CREATE TABLE pago (
 
 CREATE TABLE rutina (
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	nombre VARCHAR NOT NULL,
 	descripcion VARCHAR NOT NULL,
 	frecuencia INTEGER,
 	duracion TIME,
