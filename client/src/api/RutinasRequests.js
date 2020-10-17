@@ -6,35 +6,11 @@ class RutinasRequests {
     }
 
     static async obtenerTodasRutinas() {
-        return new Promise(resolve => {
-            setTimeout(() => resolve([
-                {
-                    nombre: "Pecho",
-                    duracion: "00:30",
-                    frecuencia: "3",
-                    profesor: "Ramiro"
-                },
-                {
-                    nombre: "Piernas",
-                    duracion: "00:45",
-                    frecuencia: "2",
-                    profesor: "Jose"
-                },
-            ]),2000)
-        })
+        return await instance.get('rutinas/');
     }
 
-    static async rutinasCliente() {
-        return new Promise(resolve => {
-            setTimeout(() => resolve([
-                {
-                    nombre: "Pecho",
-                    duracion: "00:30",
-                    frecuencia: "3",
-                    profesor: "Ramiro"
-                }
-            ]),2000)
-        })
+    static async rutinasCliente(cliente) {
+        return await instance.get(`rutinas/cliente/${cliente}`)
     }
 }
 

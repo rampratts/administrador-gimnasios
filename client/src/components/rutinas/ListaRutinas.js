@@ -6,7 +6,7 @@ import UserRequests from '../../api/UserRequests';
 import Spinner from '../utils/Spinner'
 import RutinasItem from './RutinasItem';
 
-const ListaRutinas = ({location}) => {
+const ListaRutinas = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [rutinas, setRutinas] = useState([]);
   const [cliente, setCliente] = useState();
@@ -17,7 +17,7 @@ const ListaRutinas = ({location}) => {
     setIsLoading(true);
     try {
         const res = await RutinasRequests.obtenerTodasRutinas();
-        setRutinas(res);
+        setRutinas(res.data);
     } catch (error) {
 
     }
@@ -28,8 +28,8 @@ const ListaRutinas = ({location}) => {
   const getRutinaCliente = async () => {
     setIsLoading(true);
     try {
-        const res = await RutinasRequests.rutinasCliente();
-        setRutinas(res);
+        const res = await RutinasRequests.rutinasCliente(cliente);
+        setRutinas(res.data);
     } catch (error) {
 
     }
@@ -42,13 +42,8 @@ const ListaRutinas = ({location}) => {
         const res = await UserRequests.clientes();
         setClientes(res.data);
     } catch (error) {
-
     }
   }
-
-  useEffect(() => {
-    getRutinaCliente();
-  }, [cliente])
 
   useEffect(() => {
       if(listaSeleccionada === "TODAS"){
@@ -59,8 +54,12 @@ const ListaRutinas = ({location}) => {
   },[listaSeleccionada])
 
   useEffect(() => {
-      getClientes();
-  }, []);
+    if(listaSeleccionada === "CLIENTES") getRutinaCliente();
+  },[cliente]);
+
+  useEffect(() => {
+    getClientes()
+  },[]);
 
   return (
     <Row>

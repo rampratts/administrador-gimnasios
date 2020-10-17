@@ -44,7 +44,7 @@ router.post('/asignar-cliente', Auth.isAuth, Auth.isProf, async (req, res) => {
 router.get('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
     try{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const rutinas = (await pool.query('SELECT rutina.id,rutina.descripcion,rutina.frecuencia,rutina.duracion FROM rutina INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
+        const rutinas = (await pool.query('SELECT rutina.id, rutina.nombre, rutina.descripcion,rutina.frecuencia,rutina.duracion FROM rutina INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
         if (!rutinas.length){
            return res.status(200).send({error: 'No hay rutinas disponibles'});
         }
