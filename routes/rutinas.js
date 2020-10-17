@@ -22,11 +22,12 @@ router.post('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
     }
 })
 
-router.post('/asignar-cliene', Auth.isAuth, Auth.isProf, async (req, res) => {
+router.post('/asignar-cliente', Auth.isAuth, Auth.isProf, async (req, res) => {
     const { rutinaId }  = req.body;
+    const { clienteId } = req.body;
     
     try{
-       await pool.query('INSERT INTO rutina_cliente VALUES($1, $2, $3)', [uuidv4(),req.user.id,rutinaId]);  
+       await pool.query('INSERT INTO rutina_cliente VALUES($1, $2, $3)', [uuidv4(),clienteId,rutinaId]);  
 
        res.send({
           status: "OK",
@@ -41,8 +42,8 @@ router.post('/asignar-cliene', Auth.isAuth, Auth.isProf, async (req, res) => {
 router.get('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
     try{
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM usuario WHERE id = $1', [req.user.id])).rows[0];
-        const rutinas = (await pool.query('SELECT rutina.id,rutina.descripcion,rutina.frecuencia,rutina.duracion, FROM rutina INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
-        if (rutinas.length){
+        const rutinas = (await pool.query('SELECT rutina.id,rutina.descripcion,rutina.frecuencia,rutina.duracion FROM rutina INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario.id = profesor.usuario_id WHERE usuario.gimnasio_id = $1', [gimnasio_id])).rows;
+        if (!rutinas.length){
            return res.status(200).send({error: 'No hay rutinas disponibles'});
         }
         res.send(rutinas);
@@ -52,11 +53,11 @@ router.get('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
 
 })
 
-router.get('/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
+router.get('/cliente/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
     const id = req.params.id;
 
     try {
-        const rutinascliente = (await pool.query('SELECT rutina.id, rutina.descripcion, rutina.frecuencia, rutina.duracion, FROM rutina_cliente INNER JOIN rutina ON rutina_id = rutina.id WHERE cliente.id = $1', [id])).rows;
+        const rutinascliente = (await pool.query('SELECT rutina.id, rutina.descripcion, rutina.frecuencia, rutina.duracion FROM rutina_cliente INNER JOIN rutina ON rutina_id = rutina.id WHERE cliente.id = $1', [id])).rows;
         res.send(rutinascliente)
     } catch (error) {
         res.status(400).send(error);
