@@ -12,6 +12,10 @@ class RutinasRequests {
     static async rutinasCliente(cliente) {
         return await instance.get(`rutinas/cliente/${cliente}`)
     }
+
+    static async rutina(rutina) {
+        return await instance.get(`rutinas/${rutina}`)
+    }
 }
 
 export default RutinasRequests;
