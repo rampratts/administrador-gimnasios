@@ -89,3 +89,16 @@ CREATE TABLE rutina_cliente(
 
 );
 
+CREATE TABLE planAlimentacion (
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	descripcion VARCHAR NOT NULL,
+	duracion TIME,
+	profesor_id UUID REFERENCES profesor(id) NOT NULL
+);
+
+CREATE TABLE planAlimentacion_cliente(
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	cliente_id UUID REFERENCES cliente(id) NOT NULL,
+	planAlimentacion_id UUID REFERENCES rutina(id) NOT NULL
+
+);
