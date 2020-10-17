@@ -48,8 +48,9 @@ const ListaRutinas = () => {
   useEffect(() => {
       if(listaSeleccionada === "TODAS"){
           getRutinas();
-      } else if (listaSeleccionada === "CLIENTES" && !cliente) {
-          setRutinas([])
+      } else if (listaSeleccionada === "CLIENTES") {
+          setCliente('');
+          setRutinas([]);
       }
   },[listaSeleccionada])
 

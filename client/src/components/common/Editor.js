@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import ReactQuill from "react-quill";
-import { Col, Row, Card, CardBody, Form, FormInput, Button } from "shards-react";
+import { Col, Row, Card, CardBody, Form, FormInput, Button, Alert } from "shards-react";
 import { useForm } from 'react-hook-form';
 
 import "react-quill/dist/quill.snow.css";
@@ -9,9 +9,11 @@ import RutinasRequests from "../../api/RutinasRequests";
 import Spinner from "../utils/Spinner";
 
 const Editor = () => {
-    const [titulo, setTitulo] = useState('');
     const [text, setTexto] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
 
     const { register, handleSubmit, errors} = useForm(    {
         defaultValues: {
@@ -23,14 +25,22 @@ const Editor = () => {
         setIsLoading(true);
         try {
             await RutinasRequests.crearRutina({...data, descripcion: text});
+            setSuccess(true);
+            setAlertMessage('Rutina creada con éxito');
+            setAlertOpen(true);
         } catch (error) {
-
+            setSuccess(false);
+            setAlertMessage('Error al crear rutina.');
+            setAlertOpen(true);
         }
         setIsLoading(false);
     }
 
     return (
         <Card small className="mb-3">
+            <Alert theme={success ? 'success' : 'danger'} dismissible={() => setAlertOpen(false)} open={alertOpen}>
+                {alertMessage}
+            </Alert>
             <CardBody>
                 {isLoading ? <Spinner /> : <React.Fragment />}
                 <Form className="add-new-post" onSubmit={handleSubmit(guardarRutina)}>
