@@ -31,6 +31,12 @@ export function getSidebarNavItems() {
       hasAccess: ['prof']
     },
     {
+      title: "Planes de Alimentación",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/planes-alimentacion",
+      hasAccess: ['prof']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",

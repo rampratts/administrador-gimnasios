@@ -16,6 +16,9 @@ import MisPagos from "./views/MisPagos";
 import Rutinas from "./views/Rutinas";
 import AgregarRutina from "./views/AgregarRutina";
 import Rutina from "./views/Rutina";
+import PlanesDeAlimentacion from "./views/PlanesDeAlimentacion";
+import AsignarPlanAlimentacion from "./views/PlanAlimentacion";
+import AgregarPlanAlimentacion from "./views/AgregarPlanAlimentacion";
 
 export default [
   {
@@ -90,5 +93,23 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['prof'],
     component: AgregarRutina
+  },
+  {
+    path: "/planes-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: PlanesDeAlimentacion
+  },
+  {
+    path: "/plan-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AsignarPlanAlimentacion
+  },
+  {
+    path: "/agregar-plan-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AgregarPlanAlimentacion
   }
 ];

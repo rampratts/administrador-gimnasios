@@ -11,7 +11,6 @@ router.post('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
 
     try {
         const rutinaid = uuidv4();
-        console.log(rutinaid)
 
         await pool.query("INSERT INTO rutina VALUES($1, $2, $3, $4, $5, $6)", [rutinaid, nombre,descripcion,frecuencia,duracion,id]);            
         res.send({

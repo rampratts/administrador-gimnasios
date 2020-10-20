@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink as RouterLink } from "react-router-dom";
 import {  Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, FormSelect, Button } from "shards-react";
-import RutinasRequests from '../../api/RutinasRequests';
+import PlanAlimentacionRequests from '../../api/PlanAlimentacionRequests';
 import UserRequests from '../../api/UserRequests';
 import Spinner from '../utils/Spinner'
-import RutinasItem from './RutinasItem';
+import PlanAlimentacionItem from './PlanAlimentacionItem';
 
-const ListaRutinas = () => {
+const ListaPlanes = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [rutinas, setRutinas] = useState([]);
+  const [planesAlimentacion, setPlanesAlimentacion] = useState([]);
   const [cliente, setCliente] = useState();
   const [clientes, setClientes] = useState([]);
   const [listaSeleccionada, setListaSeleccionada] = useState('TODAS');
 
-  const getRutinas = async () => {
+  const getPlanes = async () => {
     setIsLoading(true);
     try {
-        const res = await RutinasRequests.obtenerTodasRutinas();
+        const res = await PlanAlimentacionRequests.obtenerTodosLosPlanes();
         if(!res.data.error) {
-          setRutinas(res.data);
+          setPlanesAlimentacion(res.data);
         }
     } catch (error) {
 
@@ -27,11 +27,11 @@ const ListaRutinas = () => {
     setIsLoading(false);
   }
 
-  const getRutinaCliente = async () => {
+  const getPlanesCliente = async () => {
     setIsLoading(true);
     try {
-        const res = await RutinasRequests.rutinasCliente(cliente);
-        setRutinas(res.data);
+        const res = await PlanAlimentacionRequests.planesCliente(cliente);
+        setPlanesAlimentacion(res.data);
     } catch (error) {
 
     }
@@ -49,15 +49,15 @@ const ListaRutinas = () => {
 
   useEffect(() => {
       if(listaSeleccionada === "TODAS"){
-          getRutinas();
+        getPlanes();
       } else if (listaSeleccionada === "CLIENTES") {
           setCliente('');
-          setRutinas([]);
+          setPlanesAlimentacion([]);
       }
   },[listaSeleccionada])
 
   useEffect(() => {
-    if(listaSeleccionada === "CLIENTES") getRutinaCliente();
+    if(listaSeleccionada === "CLIENTES") getPlanesCliente();
   },[cliente]);
 
   useEffect(() => {
@@ -69,17 +69,17 @@ const ListaRutinas = () => {
       <Col>
         <Card small className="mb-4">
           <CardHeader className="border-bottom">
-             <RouterLink to="/agregar-rutina" className="float-right">
+             <RouterLink to="/agregar-plan-alimentacion" className="float-right">
                 <Button>
-                    Agregar Rutina
+                    Agregar Plan de Alimentacion
                 </Button>
             </RouterLink>
             <Nav tabs>
                 <NavItem>
-                    <NavLink active={listaSeleccionada === 'TODAS' ? true : false} onClick={() => setListaSeleccionada('TODAS')} href="#">Todas las Rutinas</NavLink>
+                    <NavLink active={listaSeleccionada === 'TODAS' ? true : false} onClick={() => setListaSeleccionada('TODAS')} href="#">Todos los planes de alimentacion</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink active={listaSeleccionada === 'CLIENTES' ? true : false} onClick={() => setListaSeleccionada('CLIENTES')} href="#">Rutinas por Cliente</NavLink>
+                    <NavLink active={listaSeleccionada === 'CLIENTES' ? true : false} onClick={() => setListaSeleccionada('CLIENTES')} href="#">Plan por Cliente</NavLink>
                 </NavItem>
             </Nav>
           </CardHeader>
@@ -103,15 +103,12 @@ const ListaRutinas = () => {
                     Nombre
                   </th>
                   <th scope="col" className="border-0">
-                    Duración
-                  </th>
-                  <th scope="col" className="border-0">
                     Profesor
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {rutinas.map((rutina, index) => (<RutinasItem rutina={rutina} numero={index + 1} key={index}/>))}
+                {planesAlimentacion.map((plan, index) => (<PlanAlimentacionItem planAlimentacion={plan} numero={index + 1} key={index}/>))}
               </tbody>
             </table>
           </CardBody>
@@ -121,4 +118,4 @@ const ListaRutinas = () => {
   );
 }
 
-export default ListaRutinas;
+export default ListaPlanes;
