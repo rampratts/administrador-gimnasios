@@ -9,8 +9,8 @@ class RutinasRequests {
         return await instance.get('rutinas/');
     }
 
-    static async rutinasCliente(cliente) {
-        return await instance.get(`rutinas/cliente/${cliente}`)
+    static async rutinasCliente(cliente, isUserId = false) {
+        return await instance.get(`rutinas/cliente/${cliente}?userId=${isUserId}`)
     }
 
     static async rutina(rutina) {

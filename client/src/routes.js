@@ -16,6 +16,11 @@ import MisPagos from "./views/MisPagos";
 import Rutinas from "./views/Rutinas";
 import AgregarRutina from "./views/AgregarRutina";
 import Rutina from "./views/Rutina";
+import PlanesDeAlimentacion from "./views/PlanesDeAlimentacion";
+import AsignarPlanAlimentacion from "./views/PlanAlimentacion";
+import AgregarPlanAlimentacion from "./views/AgregarPlanAlimentacion";
+import MisRutinas from "./views/MisRutinas";
+import MisPlanesAlimentacion from "./views/MisPlanesAlimentacion";
 
 export default [
   {
@@ -80,9 +85,15 @@ export default [
     component: Rutinas
   },
   {
+    path: "/mis-rutinas",
+    layout: DefaultLayout,
+    hasAccess: ['cliente'],
+    component: MisRutinas
+  },
+  {
     path: "/rutina",
     layout: DefaultLayout,
-    hasAccess: ['prof'],
+    hasAccess: ['prof', 'cliente'],
     component: Rutina
   },
   {
@@ -90,5 +101,29 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['prof'],
     component: AgregarRutina
+  },
+  {
+    path: "/planes-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: PlanesDeAlimentacion
+  },
+  {
+    path: "/mis-planes-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['cliente'],
+    component: MisPlanesAlimentacion
+  },
+  {
+    path: "/plan-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof', 'cliente'],
+    component: AsignarPlanAlimentacion
+  },
+  {
+    path: "/agregar-plan-alimentacion",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AgregarPlanAlimentacion
   }
 ];
