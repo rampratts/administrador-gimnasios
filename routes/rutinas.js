@@ -63,7 +63,7 @@ router.get('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
 })
 
 router.get('/cliente/:id', Auth.isAuth, async (req,res)=>{
-    const id = req.query.userId === true ? (await pool.query('SELECT cliente.id FROM cliente WHERE usuario_id = $1', [req.user.id])).rows[0].id : req.params.id;
+    const id = req.query.userId === 'true' ? (await pool.query('SELECT cliente.id FROM cliente WHERE usuario_id = $1', [req.user.id])).rows[0].id : req.params.id;
     
     try {
         const rutinascliente = (await pool.query('SELECT rutina.id, rutina.nombre, rutina.descripcion, rutina.frecuencia, rutina.duracion, usuario.nombre AS profesor FROM rutina_cliente INNER JOIN rutina ON rutina_id = rutina.id INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario_id = usuario.id WHERE cliente_id = $1', [id])).rows;

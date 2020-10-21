@@ -38,13 +38,13 @@ export function getSidebarNavItems() {
     },
     {
       title: "Planes de Alimentación",
-      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      htmlBefore: '<i class="material-icons">restaurant</i>',
       to: "/planes-alimentacion",
       hasAccess: ['prof']
     },
     {
       title: "Mis Planes de Alimentación",
-      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      htmlBefore: '<i class="material-icons">restaurant</i>',
       to: "/mis-planes-alimentacion",
       hasAccess: ['cliente']
     },

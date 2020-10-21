@@ -1,6 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {
   Card,
   CardHeader,
@@ -13,6 +13,7 @@ import {
 } from "shards-react";
 import PlanAlimentacionRequests from "../../api/PlanAlimentacionRequests";
 import UserRequests from "../../api/UserRequests";
+import { UserContext } from "../../context/UserContext";
 import Spinner from "../utils/Spinner";
 
 const AsignarPlanAlimnetacion = () => {
@@ -23,6 +24,7 @@ const AsignarPlanAlimnetacion = () => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [userInfo] = useContext(UserContext);
 
     const getClientes = async () => {
         try {
@@ -65,6 +67,8 @@ const AsignarPlanAlimnetacion = () => {
         getClientes()
         setPlanAlimentacionId(new URLSearchParams(window.location.search).get('id'));
     },[]);
+
+    if(userInfo.tipo_usuario === 'cliente') return (<React.Fragment />);
 
     return (
         <Card small className="mb-3">

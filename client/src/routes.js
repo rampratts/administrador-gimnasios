@@ -93,7 +93,7 @@ export default [
   {
     path: "/rutina",
     layout: DefaultLayout,
-    hasAccess: ['prof'],
+    hasAccess: ['prof', 'cliente'],
     component: Rutina
   },
   {
@@ -117,7 +117,7 @@ export default [
   {
     path: "/plan-alimentacion",
     layout: DefaultLayout,
-    hasAccess: ['prof'],
+    hasAccess: ['prof', 'cliente'],
     component: AsignarPlanAlimentacion
   },
   {
