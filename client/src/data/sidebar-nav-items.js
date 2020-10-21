@@ -31,10 +31,22 @@ export function getSidebarNavItems() {
       hasAccess: ['prof']
     },
     {
+      title: "Mis Rutinas",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/mis-rutinas",
+      hasAccess: ['cliente']
+    },
+    {
       title: "Planes de Alimentación",
       htmlBefore: '<i class="material-icons">fitness_center</i>',
       to: "/planes-alimentacion",
       hasAccess: ['prof']
+    },
+    {
+      title: "Mis Planes de Alimentación",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/mis-planes-alimentacion",
+      hasAccess: ['cliente']
     },
     {
       title: "Agregar Usuario",

@@ -9,8 +9,8 @@ class PlanAlimentacionRequests {
         return await instance.get('planAlimentacion/');
     }
 
-    static async planesCliente(cliente) {
-        return await instance.get(`planAlimentacion/cliente/${cliente}`)
+    static async planesCliente(cliente, isUserId = false) {
+        return await instance.get(`planAlimentacion/cliente/${cliente}?userId=${isUserId}`)
     }
 
     static async plan(planAlimentacion) {

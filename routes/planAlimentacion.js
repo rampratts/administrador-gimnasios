@@ -61,8 +61,8 @@ router.get('/', Auth.isAuth, Auth.isProf, async(req,res)=>{
 
 })
 
-router.get('/cliente/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
-    const id = req.params.id;
+router.get('/cliente/:id', Auth.isAuth, async (req,res)=>{
+    const id = req.query.userId === true ? (await pool.query('SELECT cliente.id FROM cliente WHERE usuario_id = $1', [req.user.id])).rows[0].id : req.params.id;
 
     try {
         const planAlimentacioncliente = (await pool.query('SELECT planAlimentacion.id, planAlimentacion.nombre, planAlimentacion.descripcion, usuario.nombre AS profesor FROM planAlimentacion_cliente INNER JOIN planAlimentacion ON planAlimentacion_id = planAlimentacion.id INNER JOIN profesor ON profesor_id = profesor.id INNER JOIN usuario ON usuario_id = usuario.id WHERE cliente_id = $1', [id])).rows;
@@ -72,7 +72,7 @@ router.get('/cliente/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
     }
 })
 
-router.get('/:id', Auth.isAuth, Auth.isProf, async (req,res)=>{
+router.get('/:id', Auth.isAuth, async (req,res)=>{
     const id = req.params.id;
 
     try {
