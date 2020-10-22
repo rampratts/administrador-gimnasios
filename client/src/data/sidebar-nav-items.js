@@ -25,6 +25,30 @@ export function getSidebarNavItems() {
       hasAccess: ['cliente']
     },
     {
+      title: "Rutinas",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/rutinas",
+      hasAccess: ['prof']
+    },
+    {
+      title: "Mis Rutinas",
+      htmlBefore: '<i class="material-icons">fitness_center</i>',
+      to: "/mis-rutinas",
+      hasAccess: ['cliente']
+    },
+    {
+      title: "Planes de Alimentación",
+      htmlBefore: '<i class="material-icons">restaurant</i>',
+      to: "/planes-alimentacion",
+      hasAccess: ['prof']
+    },
+    {
+      title: "Mis Planes de Alimentación",
+      htmlBefore: '<i class="material-icons">restaurant</i>',
+      to: "/mis-planes-alimentacion",
+      hasAccess: ['cliente']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",
