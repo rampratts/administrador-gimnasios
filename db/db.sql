@@ -103,7 +103,7 @@ CREATE TABLE planAlimentacion_cliente(
 	planAlimentacion_id UUID REFERENCES planAlimentacion(id) NOT NULL
 );
 
-CREATE TABLE Progreso(
+CREATE TABLE progreso(
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
 	descripcion VARCHAR NOT NULL,
 	profesor_id UUID REFERENCES profesor(id) NOT NULL,
