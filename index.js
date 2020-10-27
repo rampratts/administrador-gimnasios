@@ -23,6 +23,9 @@ app.use('/api/rutinas', require('./routes/rutinas'));
 
 app.use('/api/planAlimentacion', require('./routes/planAlimentacion'));
 
+app.use('/api/progresos', require('./routes/progresos'));
+
+
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
