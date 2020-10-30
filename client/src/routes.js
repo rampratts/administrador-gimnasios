@@ -22,6 +22,7 @@ import AgregarPlanAlimentacion from "./views/AgregarPlanAlimentacion";
 import MisRutinas from "./views/MisRutinas";
 import MisPlanesAlimentacion from "./views/MisPlanesAlimentacion";
 import Progresos from "./views/Progresos";
+import AgregarProgreso from "./views/AgregarProgreso";
 
 export default [
   {
@@ -132,5 +133,11 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['prof'],
     component: Progresos
+  },  
+  {
+    path: "/agregar-progreso",
+    layout: DefaultLayout,
+    hasAccess: ['prof'],
+    component: AgregarProgreso
   }
 ];

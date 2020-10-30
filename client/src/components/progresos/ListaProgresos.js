@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {  Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, FormSelect, Button } from "shards-react";
+import {  Row, Col, Card, CardHeader, CardBody, FormSelect, Button } from "shards-react";
+import { NavLink } from 'react-router-dom';
 import Spinner from '../utils/Spinner';
 import ProgresoItem from './ProgresoItem';
 import UserRequests from '../../api/UserRequests';
@@ -46,11 +47,11 @@ function ListaProgresos() {
             <Col>
             <Card small className="mb-4">
                 <CardHeader className="border-bottom">
-                {/* <RouterLink to="/agregar-rutina" className="float-right">
+                <NavLink to="/agregar-progreso" className="float-right">
                     <Button>
-                        Agregar Rutina
+                        Agregar Progreso
                     </Button>
-                </RouterLink> */}
+                </NavLink>
                 <p>Selecciona un cliente para ver sus progresos</p>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
