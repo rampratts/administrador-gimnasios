@@ -11,7 +11,7 @@ const ProgresoItem = ({progreso, numero}) => {
     }
     return (
         <React.Fragment>
-            <VerProgreso  isOpen={isModalOpen} toggle={toggle} progreso={progreso}/>
+            <VerProgreso isOpen={isModalOpen} toggle={toggle} progreso={progreso}/>
             <tr>
                 <td>{numero}</td>
                 <td><span style={styles}>{progreso.descripcion}</span></td>
