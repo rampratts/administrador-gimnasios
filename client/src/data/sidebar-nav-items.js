@@ -49,6 +49,12 @@ export function getSidebarNavItems() {
       hasAccess: ['cliente']
     },
     {
+      title: "Progresos",
+      htmlBefore: '<i class="material-icons">restaurant</i>',
+      to: "/progresos",
+      hasAccess: ['prof']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",
