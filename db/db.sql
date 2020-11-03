@@ -106,6 +106,7 @@ CREATE TABLE planAlimentacion_cliente(
 CREATE TABLE progreso(
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
 	descripcion VARCHAR NOT NULL,
+	fecha date NOT NULL,
 	profesor_id UUID REFERENCES profesor(id) NOT NULL,
     cliente_id UUID REFERENCES cliente(id) NOT NULL
 )
