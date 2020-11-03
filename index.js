@@ -25,6 +25,8 @@ app.use('/api/planAlimentacion', require('./routes/planAlimentacion'));
 
 app.use('/api/progresos', require('./routes/progresos'));
 
+app.use('/api/sugerencias', require('./routes/sugerencias'));
+
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"));
