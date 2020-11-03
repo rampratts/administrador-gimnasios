@@ -114,5 +114,6 @@ CREATE TABLE progreso(
 CREATE TABLE sugerencia(
 	id UUID PRIMARY KEY NOT NULL UNIQUE,
 	descripcion VARCHAR NOT NULL,
+	fecha date NOT NULL,
     usuario_id UUID REFERENCES usuario(id) NOT NULL
 );
