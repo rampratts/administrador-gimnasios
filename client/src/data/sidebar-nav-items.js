@@ -50,9 +50,15 @@ export function getSidebarNavItems() {
     },
     {
       title: "Progresos",
-      htmlBefore: '<i class="material-icons">restaurant</i>',
+      htmlBefore: '<i class="material-icons">show_chart</i>',
       to: "/progresos",
       hasAccess: ['prof']
+    },
+    {
+      title: "Mis progresos",
+      htmlBefore: '<i class="material-icons">show_chart</i>',
+      to: "/progresos",
+      hasAccess: ['cliente']
     },
     {
       title: "Agregar Usuario",

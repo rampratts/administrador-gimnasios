@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {  Row, Col, Card, CardHeader, CardBody, FormSelect, Button, Alert } from "shards-react";
 import Spinner from '../utils/Spinner';
 import ProgresoItem from './ProgresoItem';
 import UserRequests from '../../api/UserRequests';
 import ProgresosRequests from '../../api/ProgresosRequests';
 import AgregarProgresoForm from './AgregarProgresoForm';
+import { UserContext } from '../../context/UserContext';
 
 function ListaProgresos() {
     const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ function ListaProgresos() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [userInfo] = useContext(UserContext);
 
     const getClientes = async () => {
         setIsLoading(true);
@@ -25,10 +27,10 @@ function ListaProgresos() {
         setIsLoading(false);
     }
 
-    const getProgresoCliente = async () => {
+    const getProgresoCliente = async (isUserId = false) => {
         setIsLoading(true);
         try {
-            const res = await ProgresosRequests.progresosCliente(cliente);
+            const res = await ProgresosRequests.progresosCliente(cliente, isUserId);
             setProgresos(res.data);
         } catch (error) {
             
@@ -37,7 +39,11 @@ function ListaProgresos() {
     }
 
     useEffect(() => {
-        getClientes();
+        if(userInfo.tipo_usuario === 'prof') {
+            getClientes();
+        } else {
+            getProgresoCliente(true);
+        }
     }, [])
 
     useEffect(() => {
@@ -64,20 +70,31 @@ function ListaProgresos() {
             </Alert>
             <Card small className="mb-4">
                 <CardHeader className="border-bottom">
-                <Button className="float-right" onClick={() => setIsModalOpen(true)} disabled={!Object.keys(cliente).length}>
-                    Agregar Progreso
-                </Button>
-                <p>Selecciona un cliente para ver sus progresos</p>
+                {
+                    userInfo.tipo_usuario === 'prof' ? 
+                        <Button className="float-right" onClick={() => setIsModalOpen(true)} disabled={!Object.keys(cliente).length}>
+                            Agregar Progreso
+                        </Button>
+                        :
+                        <React.Fragment/>
+                }
+
+                <p>{userInfo.tipo_usuario === 'prof' ? 'Selecciona un cliente para ver sus progresos' : 'Aqui puedes ver todos tus progresos'}</p>
                 </CardHeader>
                 <CardBody className="p-0 pb-3">
                 {isLoading ?  <Spinner /> : <React.Fragment/>}
-                <FormSelect className="col-6 ml-3 mt-3" onChange={(e) => setCliente(e.target.value)}>
-                    <option value="" selected disabled hidden>Seleccionar Cliente...</option>
-                    {clientes.map(cliente => <option value={cliente.id}>{cliente.nombre}</option>)}
-                </FormSelect>
-
-                <AgregarProgresoForm isOpen={isModalOpen} toggle={toggle} cliente={cliente}/>
-           
+                {
+                    userInfo.tipo_usuario === 'prof' ? 
+                        <React.Fragment>
+                            <FormSelect className="col-6 ml-3 mt-3" onChange={(e) => setCliente(e.target.value)}>
+                                <option value="" selected disabled hidden>Seleccionar Cliente...</option>
+                                {clientes.map(cliente => <option value={cliente.id}>{cliente.nombre}</option>)}
+                            </FormSelect>
+                            <AgregarProgresoForm isOpen={isModalOpen} toggle={toggle} cliente={cliente}/>
+                        </React.Fragment>
+                        :
+                        <React.Fragment/>
+                }
                 <table className="table mb-0">
                 <thead className="bg-light">
                     <tr>

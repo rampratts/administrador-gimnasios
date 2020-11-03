@@ -130,7 +130,7 @@ export default [
   {
     path: "/progresos",
     layout: DefaultLayout,
-    hasAccess: ['prof'],
+    hasAccess: ['prof', 'cliente'],
     component: Progresos
   }
 ];

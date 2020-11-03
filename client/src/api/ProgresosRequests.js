@@ -1,9 +1,8 @@
 import instance from './axios.instance';
 
 class RutinasRequests {
-    static async progresosCliente(cliente) {
-        // return instance.get()
-        return await instance.get(`progresos/${cliente}`);
+    static async progresosCliente(cliente, isUserId = false) {
+        return await instance.get(`progresos/${cliente}?userId=${isUserId}`);
     }
 
     static async agregarProgreso(progreso) {
