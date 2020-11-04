@@ -8,11 +8,11 @@ const Auth = require('../middleware/authentication');
 
 router.post('/', Auth.isAuth, Auth.isProfOrClient, async(req,res)=>{
     
-    const { descripcion, fecha, usuario_id } = req.body;
+    const { descripcion, fecha } = req.body;
    
     try {
         const sugerenciaid=uuidv4();
-        await pool.query("INSERT INTO sugerencias VALUES($1, $2, $3, $4)", [sugerenciaid,descripcion,fecha,usuario_id]);            
+        await pool.query("INSERT INTO sugerencias VALUES($1, $2, $3, $4)", [sugerenciaid,descripcion,fecha,req.user.id]);            
         res.send({
             status: "OK",
             statusCode: 200,
