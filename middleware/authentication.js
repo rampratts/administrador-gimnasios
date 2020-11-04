@@ -55,5 +55,13 @@ class Auth {
         res.sendStatus(401);
     }
 }
+static isProfOrClient(req, res, next) {
+    if(req.user.tipo_usuario === 'prof' || req.user.tipo_usuario === 'cliente'){
+        next();
+    }
+ else {
+    res.sendStatus(401);
+}
+}
 }
 module.exports = Auth;
