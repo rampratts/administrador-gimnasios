@@ -23,4 +23,17 @@ router.post('/', Auth.isAuth, Auth.isProfOrClient, async(req,res)=>{
     }
 })
 
+router.get('/', Auth.isAuth, async(req,res)=>{
+    try{
+        const {gimansio_id} =(await pool.query('SELECT gimansio_id FROM Usuario WHERE id = $', [req.user.id])).rows[0];
+        const sugerencias = (await pool.query('SELECT sugerencia.id,sugerencia.descripcion,sugerencia.fecha, usuario.nombre, usuario.apellido, usuario.email FROM sugerencia INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimansio_id = $1', [gimansio_id])).rows;
+        if (!sugerencias.length){
+            return res.status(200).send({error: 'No hay sugerencias'});   
+        }
+        res.send(sugerencias); 
+    } catch (error) {
+        res.status(400).send(error);  
+    }
+})
+
 module.exports = router;
