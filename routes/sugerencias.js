@@ -23,7 +23,7 @@ router.post('/', Auth.isAuth, Auth.isProfOrClient, async(req,res)=>{
     }
 })
 
-router.get('/', Auth.isAuth, async (req,res) => {
+router.get('/', Auth.isAuth, Auth.isAuth, async (req,res) => {
     try {
         const { gimnasio_id } = (await pool.query('SELECT gimnasio_id FROM Usuario WHERE id = $1', [req.user.id])).rows[0];
         const sugerencias = (await pool.query('SELECT sugerencia.id,sugerencia.descripcion,sugerencia.fecha, usuario.nombre, usuario.apellido, usuario.email FROM sugerencia INNER JOIN usuario ON usuario_id = usuario.id WHERE usuario.gimansio_id = $1', [gimansio_id])).rows;
