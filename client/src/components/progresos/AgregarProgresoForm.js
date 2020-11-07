@@ -60,7 +60,7 @@ const AgregarProgresoForm = ({isOpen, toggle, cliente}) => {
                                     <label htmlFor="descripcion-clase">Descripción</label>
                                     <FormTextarea
                                         id="descripcion-progreso"
-                                        placeholder="Descripción de la Clase"
+                                        placeholder="Descripción del progreso"
                                         type="text"
                                         name="descripcion"
                                         innerRef={register({required: 'Indique un descripción para el progreso' })}
