@@ -16,7 +16,7 @@ const SugerenciaDetail = () => {
         try {
             const sugerenciaId = new URLSearchParams(window.location.search).get('id');
             const res = await SugerenciasRequests.sugerencia(sugerenciaId);
-            setSugerencia(res[0])
+            setSugerencia(res.data)
         } catch (error) {
 
         }
@@ -36,7 +36,7 @@ const SugerenciaDetail = () => {
                     <Spinner />
                     :
                     <React.Fragment>
-                        <h5 className="mb-3">Enviado por: {sugerencia.usuario_id}</h5>
+                        <h5 className="mb-3">Enviado por: {sugerencia.nombre} {sugerencia.apellido}</h5>
                         <h5 className="mb-3">Fecha: {sugerencia.fecha}</h5>
 
                         <ReactQuill

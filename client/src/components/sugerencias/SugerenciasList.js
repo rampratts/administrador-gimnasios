@@ -12,7 +12,7 @@ function ListaProgresos() {
         setIsLoading(true);
         try {
             const res = await SugerenciasRequests.sugerencias();
-            setSugerencias(res);
+            setSugerencias(res.data);
         } catch (error) {
             
         }

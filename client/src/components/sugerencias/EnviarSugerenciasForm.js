@@ -8,6 +8,7 @@ import "../../assets/quill.css";
 import RutinasRequests from "../../api/RutinasRequests";
 import Spinner from "../utils/Spinner";
 import PlanAlimentacionRequests from "../../api/PlanAlimentacionRequests";
+import SugerenciasRequests from "../../api/SugerenciasRequests";
 
 const EnviarSugerenciasForm = () => {
     const [text, setTexto] = useState('');
@@ -21,7 +22,7 @@ const EnviarSugerenciasForm = () => {
     const enviarSugerencia = async (data) => {
         setIsLoading(true);
         try {
-            // await PlanAlimentacionRequests.crearPlan({...data, descripcion: text});
+            await SugerenciasRequests.crearSugerencia({descripcion: text, fecha: new Date().toISOString()})
             setSuccess(true);
             setAlertMessage('Sugerencia enviada con éxito');
             setAlertOpen(true);
