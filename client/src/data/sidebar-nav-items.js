@@ -49,6 +49,30 @@ export function getSidebarNavItems() {
       hasAccess: ['cliente']
     },
     {
+      title: "Progresos",
+      htmlBefore: '<i class="material-icons">show_chart</i>',
+      to: "/progresos",
+      hasAccess: ['prof']
+    },
+    {
+      title: "Mis progresos",
+      htmlBefore: '<i class="material-icons">show_chart</i>',
+      to: "/progresos",
+      hasAccess: ['cliente']
+    },
+    {
+      title: "Enviar Sugerencias",
+      htmlBefore: '<i class="material-icons">rate_review</i>',
+      to: "/enviar-sugerencias",
+      hasAccess: ['cliente', 'prof']
+    },
+    {
+      title: "Sugerencias",
+      htmlBefore: '<i class="material-icons">rate_review</i>',
+      to: "/sugerencias",
+      hasAccess: ['admin']
+    },
+    {
       title: "Agregar Usuario",
       htmlBefore: '<i class="material-icons">person_add_alt_1</i>',
       to: "/agregar-usuario",

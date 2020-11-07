@@ -102,3 +102,18 @@ CREATE TABLE planAlimentacion_cliente(
 	cliente_id UUID REFERENCES cliente(id) NOT NULL,
 	planAlimentacion_id UUID REFERENCES planAlimentacion(id) NOT NULL
 );
+
+CREATE TABLE progreso(
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	descripcion VARCHAR NOT NULL,
+	fecha date NOT NULL,
+	profesor_id UUID REFERENCES profesor(id) NOT NULL,
+    cliente_id UUID REFERENCES cliente(id) NOT NULL
+);
+
+CREATE TABLE sugerencia(
+	id UUID PRIMARY KEY NOT NULL UNIQUE,
+	descripcion VARCHAR NOT NULL,
+	fecha date NOT NULL,
+    usuario_id UUID REFERENCES usuario(id) NOT NULL
+);

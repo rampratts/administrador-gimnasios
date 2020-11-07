@@ -21,6 +21,10 @@ import AsignarPlanAlimentacion from "./views/PlanAlimentacion";
 import AgregarPlanAlimentacion from "./views/AgregarPlanAlimentacion";
 import MisRutinas from "./views/MisRutinas";
 import MisPlanesAlimentacion from "./views/MisPlanesAlimentacion";
+import Progresos from "./views/Progresos";
+import EnviarSugerencias from "./views/EnviarSugerencias";
+import Sugerencias from "./views/Sugerencias";
+import Sugerencia from "./views/Sugerencia";
 
 export default [
   {
@@ -125,5 +129,29 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['prof'],
     component: AgregarPlanAlimentacion
+  },
+  {
+    path: "/progresos",
+    layout: DefaultLayout,
+    hasAccess: ['prof', 'cliente'],
+    component: Progresos
+  },
+  {
+    path: "/enviar-sugerencias",
+    layout: DefaultLayout,
+    hasAccess: ['prof', 'cliente'],
+    component: EnviarSugerencias
+  },
+  {
+    path: "/sugerencias",
+    layout: DefaultLayout,
+    hasAccess: ['admin'],
+    component: Sugerencias
+  },
+  {
+    path: "/sugerencia",
+    layout: DefaultLayout,
+    hasAccess: ['admin'],
+    component: Sugerencia
   }
 ];
