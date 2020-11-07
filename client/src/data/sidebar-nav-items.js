@@ -62,13 +62,13 @@ export function getSidebarNavItems() {
     },
     {
       title: "Enviar Sugerencias",
-      htmlBefore: '<i class="material-icons">show_chart</i>',
+      htmlBefore: '<i class="material-icons">rate_review</i>',
       to: "/enviar-sugerencias",
       hasAccess: ['cliente', 'prof']
     },
     {
       title: "Sugerencias",
-      htmlBefore: '<i class="material-icons">show_chart</i>',
+      htmlBefore: '<i class="material-icons">rate_review</i>',
       to: "/sugerencias",
       hasAccess: ['admin']
     },
