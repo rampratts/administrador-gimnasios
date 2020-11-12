@@ -25,6 +25,7 @@ import Progresos from "./views/Progresos";
 import EnviarSugerencias from "./views/EnviarSugerencias";
 import Sugerencias from "./views/Sugerencias";
 import Sugerencia from "./views/Sugerencia";
+import Profesionales from "./views/Profesionales";
 
 export default [
   {
@@ -153,5 +154,11 @@ export default [
     layout: DefaultLayout,
     hasAccess: ['admin'],
     component: Sugerencia
+  },
+  {
+    path: "/profesionales",
+    layout: DefaultLayout,
+    hasAccess: ['admin','prof','cliente'],
+    component: Profesionales
   }
 ];
