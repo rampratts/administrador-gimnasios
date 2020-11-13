@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import instance from '../../api/axios.instance';
 
 import {
   Card,
@@ -8,8 +9,13 @@ import {
 const Ubicacion = () => {
   const [ubicacion, setUbicacion] = useState("");
 
+  const getUbicacion = async () => {
+    const res = await instance.get('gimnasios/');
+    setUbicacion(res.data.direccion);
+  }
+
   useEffect(() => {
-    setTimeout(() => setUbicacion("la paz 2139 montevideo"), 2000);
+    getUbicacion();
   }, [])
 
   return (
