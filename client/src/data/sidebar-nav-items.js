@@ -62,7 +62,7 @@ export function getSidebarNavItems() {
     },
     {
       title: "Profesionales",
-      htmlBefore: '<i class="material-icons">rate_review</i>',
+      htmlBefore: '<i class="material-icons">supervised_user_circle</i>',
       to: "/profesionales",
       hasAccess: ['admin', 'cliente', 'prof']
     },
