@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Col, FormInput, Row, Form, Modal, ModalHeader, ModalBody } from "shards-react";
 
-const NuevoPago = ({isOpen, toggle, progreso}) => {
+const VerProgreso = ({isOpen, toggle, progreso}) => {
   const date = new Date(progreso.fecha);
 
   return (
     <Modal open={isOpen} toggle={toggle}>
-      <ModalHeader>Progreso</ModalHeader>
+      <ModalHeader>Profesional</ModalHeader>
       <ModalBody>
         <Row>
           <Col>
@@ -27,4 +27,4 @@ const NuevoPago = ({isOpen, toggle, progreso}) => {
   )
 }
 
-export default NuevoPago;
+export default VerProgreso;

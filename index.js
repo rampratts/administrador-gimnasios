@@ -27,6 +27,7 @@ app.use('/api/progresos', require('./routes/progresos'));
 
 app.use('/api/sugerencias', require('./routes/sugerencias'));
 
+app.use('/api/gimnasios', require('./routes/gimnasios'));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build/index.html"));
