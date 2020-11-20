@@ -4,6 +4,7 @@ import { Container, Row, Col } from "shards-react";
 import PageTitle from "../components/common/PageTitle";
 import UserDetails from "../components/user-profile-lite/UserDetails";
 import BajaUsuario from "../components/user-profile-lite/BajaUsuario";
+import Ubicacion from "../components/user-profile-lite/Ubicacion";
 
 const UserProfileLite = () => (
   <Container fluid className="main-content-container px-4">
@@ -15,6 +16,7 @@ const UserProfileLite = () => (
         <UserDetails />
       </Col>
       <Col lg="6">
+        <Ubicacion/>
         <BajaUsuario />
       </Col>
     </Row>
